@@ -1,4 +1,5 @@
-import 'package:apprevistas_aplicativo/telas/tela_inicial.dart';
+
+import 'package:apprevistas_aplicativo/view/tela_inicio/tela_inicial.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
