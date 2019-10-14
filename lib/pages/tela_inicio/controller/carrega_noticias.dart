@@ -1,7 +1,7 @@
 import 'dart:convert';
 
+import 'package:apprevistas_aplicativo/pages/tela_inicio/model/noticia.dart';
 import 'package:http/http.dart' as http;
-  import 'package:apprevistas_aplicativo/model/noticia.dart';
 
 Future<Noticia> getNoticia(int indice) async {
     final response = await http

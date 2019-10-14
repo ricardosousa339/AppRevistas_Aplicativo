@@ -1,7 +1,7 @@
 
-import 'package:apprevistas_aplicativo/model/noticia.dart';
-import 'package:apprevistas_aplicativo/view/fragments/textoCorpoNoticia.dart';
-import 'package:apprevistas_aplicativo/view/fragments/textoTituloNoticia.dart';
+import 'package:apprevistas_aplicativo/pages/tela_inicio/fragments/textoCorpoNoticia.dart';
+import 'package:apprevistas_aplicativo/pages/tela_inicio/fragments/textoTituloNoticia.dart';
+import 'package:apprevistas_aplicativo/pages/tela_inicio/model/noticia.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -22,20 +22,29 @@ class _TelaNoticiaState extends State<TelaNoticia> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              expandedHeight: 200.0,
+              expandedHeight: 150.0,
               floating: false,
               pinned: true,
               flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
-                  title: Text("Revista Observatório",
+                  title: Text('Revista '+widget.noticia.revista,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 16.0,
+                         shadows: [
+        Shadow(
+            blurRadius: 10.0,
+            color: Colors.black87,
+            offset: Offset(2.0, 2.0),
+            ),
+        ],
+                        fontSize: 20.0,
+                        
 
                       )),
-                  background: Image.asset(
-                    'images/443.jpg',
+                  background: Image.network(
+                    'https://sistemas.uft.edu.br/periodicos/public/journals/26/homepageImage_pt_BR.png',
                     fit: BoxFit.cover,
+                    
                   )),
             ),
           ];

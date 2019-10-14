@@ -1,5 +1,5 @@
 //Grupo de todos os blocos de noticias
-  import 'package:apprevistas_aplicativo/model/noticia.dart';
+import 'package:apprevistas_aplicativo/pages/tela_inicio/model/noticia.dart';
 import 'package:flutter/material.dart';
 
 import 'bloco_noticia.dart';
