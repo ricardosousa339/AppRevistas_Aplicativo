@@ -2,9 +2,9 @@ import 'edicao.dart';
 
 class Revista{
 
-  Revista( {this.urlDaCapa, this.nomeDaRevista, this.edicoes});
+  Revista( {this.urlDaCapaEdicaoAtual, this.nomeDaRevista, this.edicoes});
 
-  String urlDaCapa;
+  String urlDaCapaEdicaoAtual;
   String nomeDaRevista;
   List<Edicao> edicoes;
 

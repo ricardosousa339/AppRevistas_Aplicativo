@@ -29,9 +29,11 @@ class _TelaEdicoesState extends State<TelaEdicoes>{
       appBar: AppBar(title: Text('Edições'),),
       body: Container(
         child: ListView.builder(
-          itemCount: widget.revista.edicoes.length,
+          itemCount: edicoess().length,
           itemBuilder: (context, index){
-            return ListTile(
+            
+            
+            /*return ListTile(
               title: Text(widget.revista.edicoes[index].nome),
               subtitle: Text(widget.revista.edicoes[index].issn),
               onTap: (){
@@ -42,11 +44,35 @@ class _TelaEdicoesState extends State<TelaEdicoes>{
 
               },
             );
+            */
+            return ListView.builder(
+              itemCount: edicoess()[index].length,
+              itemBuilder: (contexto, indice){
+                return Image.network(edicoess()[index][indice].urlDaCapa);
+              },
+            );
           },
         )
       ),
     );
   }
 
+  List<Edicao> edicoesPorAno(int ano){
+    List<Edicao> edic = new List();
+    for (var edicAtual in widget.revista.edicoes) {
+      if(edicAtual.ano == ano)
+      edic.add(edicAtual);
+    }
+  }
 
+  List<List<Edicao>> edicoess(){
+    List<List<Edicao>> todasEdicoes = new List();
+
+    todasEdicoes.add(edicoesPorAno(2015));
+    todasEdicoes.add(edicoesPorAno(2016));
+    todasEdicoes.add(edicoesPorAno(2017));
+    todasEdicoes.add(edicoesPorAno(2018));
+    todasEdicoes.add(edicoesPorAno(2019));
+
+  }
 }

@@ -4,10 +4,12 @@ import 'artigo.dart';
 
 class Edicao{
 
-Edicao({this.issn, this.revista, this.nome, this.artigos});
+Edicao({this.ano,this.urlDaCapa,this.issn, this.revista, this.nome, this.artigos});
 String issn;
 String revista;
 String nome;
 List<Artigo> artigos;
+String urlDaCapa;
+int ano;
 
 }

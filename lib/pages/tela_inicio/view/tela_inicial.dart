@@ -41,7 +41,6 @@ class _TelaInicialState extends State<TelaInicial> {
 //Lista de paginas acessiveis na tela inicial (Noticias e Revistas)
   List<Column> paginasInicio = new List();
 
-
   //Variável com o nome da página atual
   String _paginaAtual = 'Notícias';
 
@@ -92,14 +91,35 @@ class _TelaInicialState extends State<TelaInicial> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: corPrincipal,
-        title: Text(_paginaAtual != null ? _paginaAtual : 'Início'),
-      ),
-      drawer: new Drawer(
-        
-      ),
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: corPrincipal,
+          title: Text(_paginaAtual != null ? _paginaAtual : 'Início'),
+        ),
+        drawer: new Drawer(
+          child: ListView(
+            children: <Widget>[
+              DrawerHeader(child: Text('Revistas')),
+              ListTile(
+                title: Text('Revista Observatório'),
+                trailing: Icon(Icons.star),
+              ),
+              ListTile(
+                title: Text('Revista Desafios'),
+                trailing: Icon(Icons.star),
+              ),
+              ListTile(
+                title: Text('Revista Aturá'),
+              ),
+              ListTile(
+                title: Text('Revista Brasileira de Educação do Campo'),
+              ),
+              ListTile(
+                title: Text('Arquivos Brasileiros de Educação Física'),
+              )
+            ],
+          ),
+        ),
         bottomNavigationBar: BottomNavigationBar(
           showSelectedLabels: false,
           showUnselectedLabels: false,
@@ -107,51 +127,49 @@ class _TelaInicialState extends State<TelaInicial> {
           currentIndex: _indicePaginaInferior,
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.view_agenda),
-              
-              title: Text('Notícias')
-              
-            ),
+                icon: Icon(Icons.view_agenda), title: Text('Notícias')),
             BottomNavigationBarItem(
-                icon: Icon(Icons.library_books), 
-                title: Text('Revistas'))
+                icon: Icon(Icons.library_books), title: Text('Revistas'))
           ],
           onTap: _onItemTapped,
         ),
         body: Container(
-      decoration: new BoxDecoration(gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors:[corPrincipal , corSecundaria])),
-      child:
-        _indicePaginaInferior == 0 ? paginaNoticias() : paginaRevistas()
-        ));
+            decoration: new BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [corPrincipal, corSecundaria])),
+            child: _indicePaginaInferior == 0
+                ? paginaNoticias()
+                : paginaRevistas()));
   }
 
 //Colocar pra carregar mais automaticamente
 //https://medium.com/@KarthikPonnam/flutter-loadmore-in-listview-23820612907d
 // Retorna todo o corpo da lista de notícias
   ListView paginaNoticias() {
-    return  ListView.builder(
-          itemCount: _numeroDeNoticias,
-          controller: _noticiasController,
-          itemBuilder: (BuildContext context, int index) {
-            return FutureBuilder<Noticia>(
-                future: getNoticia(index),
-                builder: (context, snapshot) {
-                  if (index == 0) {
-                    return Center();
-                  }
-                  if (snapshot.hasData) {
-                    noticias.add(snapshot.data);
-                    return cardBlocoNoticia(snapshot.data, context);
-                  } else if (snapshot.hasError) {
-                    return Text("${snapshot.error}");
-                  }
-                  return Center(
-                      widthFactor: 3.0,
-                      heightFactor: 3.0,
-                      child: CircularProgressIndicator());
-                });
-          }
-    );
+    return ListView.builder(
+        itemCount: _numeroDeNoticias,
+        controller: _noticiasController,
+        itemBuilder: (BuildContext context, int index) {
+          return FutureBuilder<Noticia>(
+              future: getNoticia(index),
+              builder: (context, snapshot) {
+                if (index == 0) {
+                  return Center();
+                }
+                if (snapshot.hasData) {
+                  noticias.add(snapshot.data);
+                  return cardBlocoNoticia(snapshot.data, context);
+                } else if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                }
+                return Center(
+                    widthFactor: 3.0,
+                    heightFactor: 3.0,
+                    child: CircularProgressIndicator());
+              });
+        });
   }
 
   //Retorna todo o corpo da página que aparece quando se clica pra trocar de Notícias pra Revistas
@@ -169,13 +187,46 @@ class _TelaInicialState extends State<TelaInicial> {
               //decoration: new BoxDecoration(color: Colors.white),
               child: GestureDetector(
                   onTap: () {
+                    Revista revista = new Revista(
+                       nomeDaRevista: 'Observatório',
+                        edicoes: [
+                          new Edicao(ano: 2015, issn: '1221', nome: 'Vol. 01 N. 01', artigos: [
+                            new Artigo(ano: '2010', titulo: 'Artigo bla'),
+                            new Artigo(ano:'2010', titulo: 'Artigo blablabla')
+                          ],urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_112_pt_BR.png'),
+                          new Edicao(ano: 2015, issn: '1222', nome: 'Vol. 01 N.02', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_113_pt_BR.png'),
+                          new Edicao(ano: 2015, issn: '1223', nome: 'Vol. 01 N.03', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_123_pt_BR.png'),
+                          new Edicao(ano: 2016, issn: '1224', nome: 'Vol. 02 N.01', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_114_pt_BR.png'),
+                          new Edicao(ano: 2016, issn: '1225', nome: 'Vol. 02 N.02', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_145_pt_BR.png'),
+                          new Edicao(ano: 2016, issn: '1226', nome: 'Vol. 02 N.03', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_141_pt_BR.png'),
+                          new Edicao(ano: 2016, issn: '1227', nome: 'Vol. 02 N.04', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_157_pt_BR.png'),
+                          new Edicao(ano: 2016, issn: '1228', nome: 'Vol. 02 N.05', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_142_pt_BR.jpg'),
+                          new Edicao(ano: 2017, issn: '1229', nome: 'Vol. 03 N.01', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_175_pt_BR.png'),
+                          new Edicao(ano: 2017, issn: '1230', nome: 'Vol. 03 N.02', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_178_pt_BR.png'),
+                          new Edicao(ano: 2017, issn: '1231', nome: 'Vol. 03 N.03', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_199_pt_BR.png'),
+                          new Edicao(ano: 2017, issn: '1232', nome: 'Vol. 03 N.04', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_179_pt_BR.png'),
+                          new Edicao(ano: 2017, issn: '1233', nome: 'Vol. 03 N.05', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_180_pt_BR.png'),
+                          new Edicao(ano: 2017, issn: '1234', nome: 'Vol. 03 N.06', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_181_pt_BR.png'),
+                          new Edicao(ano: 2018, issn: '1235', nome: 'Vol. 04 N.01', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_206_pt_BR.png'),
+                          new Edicao(ano: 2018, issn: '1236', nome: 'Vol. 04 N.02', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_219_pt_BR.png'),
+                          new Edicao(ano: 2018, issn: '1237', nome: 'Vol. 04 N.03', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_227_pt_BR.png'),
+                          new Edicao(ano: 2018, issn: '1238', nome: 'Vol. 04 N.04', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_218_pt_BR.jpg'),
+                          new Edicao(ano: 2018, issn: '1239', nome: 'Vol. 04 N.05', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_213_pt_BR.png'),
+                          new Edicao(ano: 2018, issn: '1240', nome: 'Vol. 04 N.06', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_280_pt_BR.png'),
+                          new Edicao(ano: 2019, issn: '1241', nome: 'Vol. 05 N.01', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_241_pt_BR.jpg'),
+                          new Edicao(ano: 2019, issn: '1242', nome: 'Vol. 05 N.02', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_339_pt_BR.jpg'),
+                          new Edicao(ano: 2019, issn: '1243', nome: 'Vol. 05 N.03', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_237_pt_BR.jpg'),
+                          new Edicao(ano: 2019, issn: '1244', nome: 'Vol. 05 N.04', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_341_pt_BR.jpg'),
+                          
+                          
 
-                    Revista revista =  new Revista(urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/20/journalThumbnail_pt_BR.png',nomeDaRevista:'Observatório',edicoes: [new Edicao(issn: '1221', nome: 'N. 01',artigos: [new Artigo(ano:'2010',titulo: 'Artigo bla')])]);
+                        ]);
 
- Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => TelaEdicoes(revista: revista)));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                TelaEdicoes(revista: revista)));
 
                     print(it);
                   },

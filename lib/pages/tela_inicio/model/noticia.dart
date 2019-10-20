@@ -16,7 +16,7 @@ factory Noticia.fromJson(Map<String, dynamic> json){
     conteudo: json['body'],
     idUsuario: json['userId'],
     id: json['id'],
-    revista : json['id'] % 10 == 1 ? 'Observatório' : json['id']%10 == 2 ? 'Desafios' : 'Aturá' 
+    revista : json['id'] % 10 == 1 ? 'Revista Observatório' : json['id']%10 == 2 ? 'Revista Desafios' : 'Revista Aturá' 
   );
 }
 
