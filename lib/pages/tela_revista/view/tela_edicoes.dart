@@ -16,20 +16,42 @@ class TelaEdicoes extends StatefulWidget{
 class _TelaEdicoesState extends State<TelaEdicoes>{
 
 
-  
+  List<List<Edicao>> edicoes;
+
   @override
   void initState() {
 
-
+edicoes = edicoess();
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Edições'),),
-      body: Container(
+      appBar: AppBar(title: Text('Edições '),),
+      body: 
+      
+      GridView.count(
+          // Cria um grid com duas colunas
+          crossAxisCount: 2,
+          // Gera 100 Widgets que exibem o seu índice
+          children: List.generate(10, (index) {
+            return GestureDetector(child: 
+             Card(child:Image.network(widget.revista.edicoes[index].urlDaCapa,)
+           )
+           ,onTap: (){
+              Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                TelaEdicao( edicao:widget.revista.edicoes[index])));
+           },
+            );
+            
+          }),
+      /*Container(
         child: ListView.builder(
-          itemCount: edicoess().length,
+          itemCount: edicoes.length,
+          shrinkWrap: true,
           itemBuilder: (context, index){
             
             
@@ -45,16 +67,24 @@ class _TelaEdicoesState extends State<TelaEdicoes>{
               },
             );
             */
-            return ListView.builder(
-              itemCount: edicoess()[index].length,
+
+            
+            return Container(child: 
+             ListView.builder(
+               shrinkWrap: true,
+               scrollDirection: Axis.horizontal,
+              itemCount: edicoes[index].length,
               itemBuilder: (contexto, indice){
-                return Image.network(edicoess()[index][indice].urlDaCapa);
+                return Image.network(edicoes[index][indice].urlDaCapa, height: 100,);
               },
-            );
+            )
+            ,);
+            
           },
         )
       ),
-    );
+      */
+    ));
   }
 
   List<Edicao> edicoesPorAno(int ano){
@@ -63,6 +93,7 @@ class _TelaEdicoesState extends State<TelaEdicoes>{
       if(edicAtual.ano == ano)
       edic.add(edicAtual);
     }
+    return edic;
   }
 
   List<List<Edicao>> edicoess(){
@@ -73,6 +104,6 @@ class _TelaEdicoesState extends State<TelaEdicoes>{
     todasEdicoes.add(edicoesPorAno(2017));
     todasEdicoes.add(edicoesPorAno(2018));
     todasEdicoes.add(edicoesPorAno(2019));
-
+    return todasEdicoes;
   }
 }

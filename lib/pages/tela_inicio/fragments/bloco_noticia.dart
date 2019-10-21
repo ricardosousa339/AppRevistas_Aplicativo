@@ -6,20 +6,8 @@ import 'package:apprevistas_aplicativo/pages/tela_inicio/view/tela_noticia.dart'
 import 'package:flutter/material.dart';
 import 'package:apprevistas_aplicativo/icons/my_flutter_app_icons.dart';
 import 'package:share/share.dart';
-import 'package:url_launcher/url_launcher.dart';
-
 
 Card cardBlocoNoticia(Noticia noticia, BuildContext context) {
-
-_launchURL() async {
-  const url = 'https://flutter.dev';
-  if (await canLaunch(url)) {
-    await launch(url);
-  } else {
-    throw 'Could not launch $url';
-  }
-}
-
   return Card(
       margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
       elevation: 4.0,
@@ -59,24 +47,13 @@ _launchURL() async {
             overflow: TextOverflow.ellipsis,
             maxLines: 2,
           ),
-        ),
-        Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-          FlatButton(
-            child: Icon(Icons.star),
-            onPressed: () {},
-          ),
-          FlatButton(
-            child: Icon(Icons.file_download),
-            onPressed: (){
-              
-            },
-          ),
-          FlatButton(
+          trailing: GestureDetector(
             child: Icon(Icons.share),
-            onPressed: (){
-              Share.share('www.google.com');
+            onTap: () {
+              Share.share(
+                  'https://sistemas.uft.edu.br/periodicos/index.php/observatorio');
             },
-          )
-        ])
+          ),
+        ),
       ]));
 }

@@ -22,12 +22,12 @@ class _TelaNoticiaState extends State<TelaNoticia> {
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverAppBar(
-              expandedHeight: 150.0,
+              expandedHeight: 170.0,
               floating: false,
               pinned: true,
               flexibleSpace: FlexibleSpaceBar(
                   centerTitle: true,
-                  title: Text('Revista '+widget.noticia.revista,
+                  title: Text(widget.noticia.revista,
                       style: TextStyle(
                         color: Colors.white,
                          shadows: [
@@ -41,11 +41,7 @@ class _TelaNoticiaState extends State<TelaNoticia> {
                         
 
                       )),
-                  background: Image.network(
-                    'https://sistemas.uft.edu.br/periodicos/public/journals/26/homepageImage_pt_BR.png',
-                    fit: BoxFit.cover,
-                    
-                  )),
+                  background: Image.asset('images/Observatorio.png')),
             ),
           ];
         },

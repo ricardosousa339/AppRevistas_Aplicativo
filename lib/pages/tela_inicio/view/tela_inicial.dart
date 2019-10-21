@@ -98,8 +98,23 @@ class _TelaInicialState extends State<TelaInicial> {
         ),
         drawer: new Drawer(
           child: ListView(
+            
             children: <Widget>[
-              DrawerHeader(child: Text('Revistas')),
+              UserAccountsDrawerHeader(
+  accountName: Text("Ricardo Henrique"),
+  accountEmail: Text("ricardosousa339@gmail.com"),
+  currentAccountPicture: CircleAvatar(
+    backgroundColor:
+        Theme.of(context).platform == TargetPlatform.iOS
+            ? Colors.blue
+            : Colors.white,
+    child: Text(
+      "RH",
+      style: TextStyle(fontSize: 40.0),
+    ),
+  ),
+),
+              
               ListTile(
                 title: Text('Revista Observatório'),
                 trailing: Icon(Icons.star),
@@ -191,16 +206,30 @@ class _TelaInicialState extends State<TelaInicial> {
                        nomeDaRevista: 'Observatório',
                         edicoes: [
                           new Edicao(ano: 2015, issn: '1221', nome: 'Vol. 01 N. 01', artigos: [
-                            new Artigo(ano: '2010', titulo: 'Artigo bla'),
-                            new Artigo(ano:'2010', titulo: 'Artigo blablabla')
+                            new Artigo(ano: '2010', titulo: 'EXTENSÃO EM JORNALISMO E COMUNICAÇÃO: diálogos por e entre saberes', autores: ['Duílio Fabbri Júnior', 'Fabiano Ormaneze', 'Sandra de Deus', 'Nelson Russo de Moraes', 'Francisco Gilson Rebouças Porto Junior'], descricao: "Adjdj aammsms amammsns mamamssnm amsn", dia:'12',mes:'2',),
+                             new Artigo(ano: '2010', titulo: 'EUFONIA: RADIOJORNALISMO EDUCATIVO NO SEMIÁRIDO', autores: ['Duílio Fabbri Júnior', 'Fabiano Ormaneze', 'Sandra de Deus', 'Nelson Russo de Moraes', 'Francisco Gilson Rebouças Porto Junior'], descricao: "Adjdj aammsms amammsns mamamssnm amsn", dia:'12',mes:'2',),
                           ],urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_112_pt_BR.png'),
-                          new Edicao(ano: 2015, issn: '1222', nome: 'Vol. 01 N.02', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_113_pt_BR.png'),
-                          new Edicao(ano: 2015, issn: '1223', nome: 'Vol. 01 N.03', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_123_pt_BR.png'),
-                          new Edicao(ano: 2016, issn: '1224', nome: 'Vol. 02 N.01', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_114_pt_BR.png'),
-                          new Edicao(ano: 2016, issn: '1225', nome: 'Vol. 02 N.02', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_145_pt_BR.png'),
-                          new Edicao(ano: 2016, issn: '1226', nome: 'Vol. 02 N.03', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_141_pt_BR.png'),
-                          new Edicao(ano: 2016, issn: '1227', nome: 'Vol. 02 N.04', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_157_pt_BR.png'),
-                          new Edicao(ano: 2016, issn: '1228', nome: 'Vol. 02 N.05', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_142_pt_BR.jpg'),
+                          new Edicao(ano: 2015, issn: '1222', nome: 'Vol. 01 N.02', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_113_pt_BR.png', artigos: [                        new Artigo(ano: '2010', titulo: 'EXTENSÃO EM JORNALISMO E COMUNICAÇÃO: diálogos por e entre saberes', autores: ['Duílio Fabbri Júnior', 'Fabiano Ormaneze', 'Sandra de Deus', 'Nelson Russo de Moraes', 'Francisco Gilson Rebouças Porto Junior'], descricao: "Adjdj aammsms amammsns mamamssnm amsn", dia:'12',mes:'2',),
+                             new Artigo(ano: '2010', titulo: 'EUFONIA: RADIOJORNALISMO EDUCATIVO NO SEMIÁRIDO', autores: ['Duílio Fabbri Júnior', 'Fabiano Ormaneze', 'Sandra de Deus', 'Nelson Russo de Moraes', 'Francisco Gilson Rebouças Porto Junior'], descricao: "Adjdj aammsms amammsns mamamssnm amsn", dia:'12',mes:'2',),
+    ]),
+                          new Edicao(ano: 2015, issn: '1223', nome: 'Vol. 01 N.03', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_123_pt_BR.png', artigos: [                        new Artigo(ano: '2010', titulo: 'EXTENSÃO EM JORNALISMO E COMUNICAÇÃO: diálogos por e entre saberes', autores: ['Duílio Fabbri Júnior', 'Fabiano Ormaneze', 'Sandra de Deus', 'Nelson Russo de Moraes', 'Francisco Gilson Rebouças Porto Junior'], descricao: "Adjdj aammsms amammsns mamamssnm amsn", dia:'12',mes:'2',),
+                             new Artigo(ano: '2010', titulo: 'EUFONIA: RADIOJORNALISMO EDUCATIVO NO SEMIÁRIDO', autores: ['Duílio Fabbri Júnior', 'Fabiano Ormaneze', 'Sandra de Deus', 'Nelson Russo de Moraes', 'Francisco Gilson Rebouças Porto Junior'], descricao: "Adjdj aammsms amammsns mamamssnm amsn", dia:'12',mes:'2',),
+    ]),
+                          new Edicao(ano: 2016, issn: '1224', nome: 'Vol. 02 N.01', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_114_pt_BR.png', artigos: [                        new Artigo(ano: '2010', titulo: 'EXTENSÃO EM JORNALISMO E COMUNICAÇÃO: diálogos por e entre saberes', autores: ['Duílio Fabbri Júnior', 'Fabiano Ormaneze', 'Sandra de Deus', 'Nelson Russo de Moraes', 'Francisco Gilson Rebouças Porto Junior'], descricao: "Adjdj aammsms amammsns mamamssnm amsn", dia:'12',mes:'2',),
+                             new Artigo(ano: '2010', titulo: 'EUFONIA: RADIOJORNALISMO EDUCATIVO NO SEMIÁRIDO', autores: ['Duílio Fabbri Júnior', 'Fabiano Ormaneze', 'Sandra de Deus', 'Nelson Russo de Moraes', 'Francisco Gilson Rebouças Porto Junior'], descricao: "Adjdj aammsms amammsns mamamssnm amsn", dia:'12',mes:'2',),
+    ]),
+                          new Edicao(ano: 2016, issn: '1225', nome: 'Vol. 02 N.02', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_145_pt_BR.png',artigos: [                        new Artigo(ano: '2010', titulo: 'EXTENSÃO EM JORNALISMO E COMUNICAÇÃO: diálogos por e entre saberes', autores: ['Duílio Fabbri Júnior', 'Fabiano Ormaneze', 'Sandra de Deus', 'Nelson Russo de Moraes', 'Francisco Gilson Rebouças Porto Junior'], descricao: "Adjdj aammsms amammsns mamamssnm amsn", dia:'12',mes:'2',),
+                             new Artigo(ano: '2010', titulo: 'EUFONIA: RADIOJORNALISMO EDUCATIVO NO SEMIÁRIDO', autores: ['Duílio Fabbri Júnior', 'Fabiano Ormaneze', 'Sandra de Deus', 'Nelson Russo de Moraes', 'Francisco Gilson Rebouças Porto Junior'], descricao: "Adjdj aammsms amammsns mamamssnm amsn", dia:'12',mes:'2',),
+    ]),
+                          new Edicao(ano: 2016, issn: '1226', nome: 'Vol. 02 N.03', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_141_pt_BR.png', artigos: [                        new Artigo(ano: '2010', titulo: 'EXTENSÃO EM JORNALISMO E COMUNICAÇÃO: diálogos por e entre saberes', autores: ['Duílio Fabbri Júnior', 'Fabiano Ormaneze', 'Sandra de Deus', 'Nelson Russo de Moraes', 'Francisco Gilson Rebouças Porto Junior'], descricao: "Adjdj aammsms amammsns mamamssnm amsn", dia:'12',mes:'2',),
+                             new Artigo(ano: '2010', titulo: 'EUFONIA: RADIOJORNALISMO EDUCATIVO NO SEMIÁRIDO', autores: ['Duílio Fabbri Júnior', 'Fabiano Ormaneze', 'Sandra de Deus', 'Nelson Russo de Moraes', 'Francisco Gilson Rebouças Porto Junior'], descricao: "Adjdj aammsms amammsns mamamssnm amsn", dia:'12',mes:'2',),
+    ]),
+                          new Edicao(ano: 2016, issn: '1227', nome: 'Vol. 02 N.04', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_157_pt_BR.png', artigos: [                        new Artigo(ano: '2010', titulo: 'EXTENSÃO EM JORNALISMO E COMUNICAÇÃO: diálogos por e entre saberes', autores: ['Duílio Fabbri Júnior', 'Fabiano Ormaneze', 'Sandra de Deus', 'Nelson Russo de Moraes', 'Francisco Gilson Rebouças Porto Junior'], descricao: "Adjdj aammsms amammsns mamamssnm amsn", dia:'12',mes:'2',),
+                             new Artigo(ano: '2010', titulo: 'EUFONIA: RADIOJORNALISMO EDUCATIVO NO SEMIÁRIDO', autores: ['Duílio Fabbri Júnior', 'Fabiano Ormaneze', 'Sandra de Deus', 'Nelson Russo de Moraes', 'Francisco Gilson Rebouças Porto Junior'], descricao: "Adjdj aammsms amammsns mamamssnm amsn", dia:'12',mes:'2',),
+    ]),
+                          new Edicao(ano: 2016, issn: '1228', nome: 'Vol. 02 N.05', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_142_pt_BR.jpg', artigos: [                        new Artigo(ano: '2010', titulo: 'EXTENSÃO EM JORNALISMO E COMUNICAÇÃO: diálogos por e entre saberes', autores: ['Duílio Fabbri Júnior', 'Fabiano Ormaneze', 'Sandra de Deus', 'Nelson Russo de Moraes', 'Francisco Gilson Rebouças Porto Junior'], descricao: "Adjdj aammsms amammsns mamamssnm amsn", dia:'12',mes:'2',),
+                             new Artigo(ano: '2010', titulo: 'EUFONIA: RADIOJORNALISMO EDUCATIVO NO SEMIÁRIDO', autores: ['Duílio Fabbri Júnior', 'Fabiano Ormaneze', 'Sandra de Deus', 'Nelson Russo de Moraes', 'Francisco Gilson Rebouças Porto Junior'], descricao: "Adjdj aammsms amammsns mamamssnm amsn", dia:'12',mes:'2',),
+    ]),
                           new Edicao(ano: 2017, issn: '1229', nome: 'Vol. 03 N.01', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_175_pt_BR.png'),
                           new Edicao(ano: 2017, issn: '1230', nome: 'Vol. 03 N.02', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_178_pt_BR.png'),
                           new Edicao(ano: 2017, issn: '1231', nome: 'Vol. 03 N.03', urlDaCapa: 'https://sistemas.uft.edu.br/periodicos/public/journals/26/cover_issue_199_pt_BR.png'),

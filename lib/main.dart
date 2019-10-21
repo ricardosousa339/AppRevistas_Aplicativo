@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       
       theme: ThemeData(
-        primarySwatch: Colors.indigo,
+        primarySwatch: Colors.red,
       ),
       home: TelaInicial(),
     );
