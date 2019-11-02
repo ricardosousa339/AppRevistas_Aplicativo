@@ -1,5 +1,5 @@
+import 'package:apprevistas_aplicativo/pages/tela_artigo/view/tela_artigo.dart';
 import 'package:apprevistas_aplicativo/pages/tela_revista/model/edicao.dart';
-import 'package:apprevistas_aplicativo/pages/tela_revista/view/tala_artigo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 

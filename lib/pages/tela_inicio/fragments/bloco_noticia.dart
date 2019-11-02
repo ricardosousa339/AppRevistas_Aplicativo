@@ -1,10 +1,8 @@
 //Padronização do bloco de notícias
 
-import 'package:apprevistas_aplicativo/icons/my_flutter_app_icons.dart';
 import 'package:apprevistas_aplicativo/pages/tela_inicio/model/noticia.dart';
 import 'package:apprevistas_aplicativo/pages/tela_inicio/view/tela_noticia.dart';
 import 'package:flutter/material.dart';
-import 'package:apprevistas_aplicativo/icons/my_flutter_app_icons.dart';
 import 'package:share/share.dart';
 
 Card cardBlocoNoticia(Noticia noticia, BuildContext context) {

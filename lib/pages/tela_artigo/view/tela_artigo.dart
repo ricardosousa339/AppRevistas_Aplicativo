@@ -1,6 +1,4 @@
-import 'package:apprevistas_aplicativo/pages/tela_inicio/fragments/textoTituloNoticia.dart';
 import 'package:apprevistas_aplicativo/pages/tela_revista/model/artigo.dart';
-import 'package:apprevistas_aplicativo/pages/tela_revista/model/edicao.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:share/share.dart';

@@ -1,4 +1,4 @@
-import 'package:apprevistas_aplicativo/pages/tela_revista/model/revista.dart';
+
 
 import 'artigo.dart';
 
@@ -12,4 +12,13 @@ List<Artigo> artigos;
 String urlDaCapa;
 int ano;
 
+
+factory Edicao.fromJson(Map<String, dynamic> json){
+  return Edicao(
+    issn: json['id'][0].toString().toUpperCase()+json['title'].toString().substring(1),
+    revista: json['url'],
+    ano:  json['albumId'],
+
+     );
+}
 }
