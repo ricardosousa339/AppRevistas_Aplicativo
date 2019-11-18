@@ -20,16 +20,11 @@ return PageView.builder(
                 return GestureDetector(
                   child: Card(
                     
-                      child: Image.asset(
-                    edicoes[index][posicao].urlDaCapa,filterQuality: FilterQuality.low,
+                      child: Text(
+                    edicoes[index][posicao].nomePortugues,
                   )),
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => TelaEdicao(
-                                edicao: revista.edicoes[index])));
-                  },
+                  }
                 );
               }),
             );

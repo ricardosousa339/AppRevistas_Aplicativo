@@ -41,7 +41,7 @@ Card cardBlocoNoticia(Noticia noticia, BuildContext context) {
                   fontSize: 20,
                   fontWeight: FontWeight.bold)),
           subtitle: Text(
-            noticia.id.toString() + ' ' + noticia.conteudo,
+             noticia.subtitulo,
             overflow: TextOverflow.ellipsis,
             maxLines: 2,
           ),
