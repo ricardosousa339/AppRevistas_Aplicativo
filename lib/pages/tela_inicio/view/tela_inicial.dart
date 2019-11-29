@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:apprevistas_aplicativo/pages/tela_inicio/view/postar_noticia.dart';
+import 'package:apprevistas_aplicativo/pages/tela_login/controller/get_usuario.dart';
 import 'package:apprevistas_aplicativo/pages/tela_login/model/usuario.dart';
+import 'package:apprevistas_aplicativo/pages/tela_login/view/tela_login.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:apprevistas_aplicativo/pages/tela_inicio/controller/carrega_noticias.dart';
@@ -17,19 +19,24 @@ import 'package:apprevistas_aplicativo/pages/tela_revista/view/tela_revista.dart
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../urls.dart';
+import 'dart:ui' as ui;
 
 class TelaInicial extends StatefulWidget {
-  TelaInicial({Key key, this.title, this.usuarioAtual}) : super(key: key);
-  final String title;
-  final Usuario usuarioAtual;
+
+  TelaInicial({Key key, this.flag,  this.keyy, this.user, }) : super(key: key);
+  final String flag;
+  final String keyy;
+   Usuario user;
 
   @override
   _TelaInicialState createState() => _TelaInicialState();
 }
 
 class _TelaInicialState extends State<TelaInicial> {
+  bool estaLogado = false;
+
   //Armazena as urls das fotos das capas
   List<String> capas = new List();
 
@@ -54,16 +61,16 @@ class _TelaInicialState extends State<TelaInicial> {
   //Variável com o nome da página atual
   String _paginaAtual = 'Notícias';
 
+String _key;
+
 //Lista de revistas
   List revistas = new List();
-
+  List<Revista> objetosRevistas;
   @override
   void initState() {
-    // Informações de teste inseridas
 
-    capas.add(
-        "https://sistemas.uft.edu.br/periodicos/public/journals/20/journalThumbnail_pt_BR.png");
-
+    //Obter os dados do usuario logado
+   
     //A pagina que comeca aberta e a primeira, a de noticias
     _indicePaginaInferior = 0;
     _numeroDeNoticias = 100;
@@ -74,8 +81,9 @@ class _TelaInicialState extends State<TelaInicial> {
       _indice_Noticia++;
     }
   });
+  ricardosousa339@gmail.com
+  12345678
   */
-    _makePatchRequest();
     getRevista();
 
     super.initState();
@@ -106,11 +114,12 @@ class _TelaInicialState extends State<TelaInicial> {
         title: Text(_paginaAtual != null ? _paginaAtual : 'Início'),
       ),
       drawer: new Drawer(
-        child: ListView(
+        child: widget.user != null ? ListView(
           children: <Widget>[
+            
             UserAccountsDrawerHeader(
-              accountName: Text("Ricardo Henrique"),
-              accountEmail: Text("ricardosousa339@gmail.com"),
+              accountName:  Text(widget.user.primeiroNome+" "+widget.user.segundoNome) ,
+              accountEmail: Text(widget.user.email) ,
               currentAccountPicture: GestureDetector(
                   child: CircleAvatar(
                     backgroundColor:
@@ -118,39 +127,24 @@ class _TelaInicialState extends State<TelaInicial> {
                             ? Colors.blue
                             : Colors.white,
                     child: Text(
-                      "RH",
+                      widget.user.primeiroNome[0]+widget.user.segundoNome[0],
                       style: TextStyle(fontSize: 40.0),
                     ),
+                   
                   ),
+                  
                   onTap: () {
                     Navigator.of(context).pop();
                     showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return telaDeLogin();
+                          return LoginScreen();
                         });
                   }),
               onDetailsPressed: () {},
             ),
-            ListTile(
-              title: Text('Revista Observatório'),
-              trailing: Icon(Icons.star),
-            ),
-            ListTile(
-              title: Text('Revista Desafios'),
-              trailing: Icon(Icons.star),
-            ),
-            ListTile(
-              title: Text('Revista Aturá'),
-            ),
-            ListTile(
-              title: Text('Revista Brasileira de Educação do Campo'),
-            ),
-            ListTile(
-              title: Text('Arquivos Brasileiros de Educação Física'),
-            )
           ],
-        ),
+        ) : null,
       ),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
@@ -173,13 +167,53 @@ class _TelaInicialState extends State<TelaInicial> {
                   colors: [corPrincipal, corSecundaria])),
           child:
               _indicePaginaInferior == 0 ? paginaNoticias() : paginaRevistas()),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.edit),
-        onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => PostarNoticia()));
-        },
-      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: _indicePaginaInferior == 0
+          ? FloatingActionButton(
+              backgroundColor: corTerciaria,
+              child: Icon(Icons.edit),
+              onPressed: () {
+                if (widget.user == null) {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      // retorna um objeto do tipo Dialog
+                      return AlertDialog(
+                        title: new Text("Você não está logado!"),
+                        content: new Text("Faça login para executar essa ação"),
+                        actions: <Widget>[
+                          // define os botões na base do dialogo
+                          new FlatButton(
+                            child: new Text("Login"),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginScreen()));
+                            },
+                          ),
+                          FlatButton(
+                              child: new Text("Voltar"),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              })
+                        ],
+                      );
+                    },
+                  );
+                }
+                else{
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => PostarNoticia(
+                          keyy:widget.keyy,
+                              revistas: objetosRevistas,
+                              idUsuario: widget.user.id,
+                            )));
+              }},
+            )
+          : Center(),
     );
   }
 
@@ -195,19 +229,23 @@ class _TelaInicialState extends State<TelaInicial> {
           } else if (snapshot.hasError) {
             return Text("${snapshot.error}");
           }
-          return Center(
-             
-              child: CircularProgressIndicator());
+          return Center(child: CircularProgressIndicator());
         });
   }
 
 //Carrega as revistas e salva na lista
 
   getRevista() async {
-    String uri = "http://matheusjv14.pythonanywhere.com/api/revistas/";
+    String uri = raizApi + '/api/revistas';
 
     var response = await http
         .get(Uri.encodeFull(uri), headers: {"Accept": "application/json"});
+
+    var data = json.decode(utf8.decode(response.bodyBytes));
+    var rest = data as List;
+    //print('rest'+rest.toString());
+    objetosRevistas =
+        rest.map<Revista>((json) => Revista.fromJson(json)).toList();
 
     setState(() {
       var extractData = json.decode(utf8.decode(response.bodyBytes));
@@ -236,11 +274,10 @@ class _TelaInicialState extends State<TelaInicial> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => TelaRevista(nomeRevista:
-                                  it["nome_revista_portugues"],
+                            builder: (context) => TelaRevista(
+                                  nomeRevista: it["nome_revista_portugues"],
                                   idRevista: (it["id"].toString()),
                                 )));
-
                   },
                   child: Container(
                       padding: EdgeInsets.all(8),
@@ -271,27 +308,23 @@ class _TelaInicialState extends State<TelaInicial> {
       },
     );
   }
+ 
 
-  _makePatchRequest() async {
-    // set up PATCH request arguments
-    String url = raizApi+'/api/update-noticias/1';
-    Map<String, String> headers = {"Content-type": "application/json"};
-    String json = '{"imagem": "heelo"}';
+/*
+  checaSeUsuarioEstaLogado() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var email = prefs.getString('email');
 
-    // make PATCH request
-    Response response = await patch(url, headers: headers, body: json);
-
-    // check the status code for the result
-    int statusCode = response.statusCode;
-
-    // only the title is updated
-    String body = response.body;
-    print(body);
-    // {
-    //   "userId": 1,
-    //   "id": 1
-    //   "title": "Hello",
-    //   "body": "quia et suscipit\nsuscipit recusandae... (old body text not changed)",
-    // }
+    if (email != null) {
+      estaLogado = true;
+    }
+  }
+  */
+//ricardosousa339@gmail.com
+//12345678
+  carregaUsuario () async {
+      //this.widget.user = await getUsuario(widget.user.email);
+      
+    
   }
 }

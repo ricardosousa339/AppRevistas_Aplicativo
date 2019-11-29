@@ -1,34 +1,40 @@
-/*
 class Usuario {
+  String key;
 
-String id;
-String primeiroNome;
-String segundoNome;
-String email;
+  String primeiroNome;
+  String segundoNome;
+  String email;
+  String id;
+  String urlDaFotoDePerfil;
+  String password;
 
-Usuario ({this.id, this.primeiroNome, this.segundoNome, this.email});
+  Usuario({
+    this.key,
+    this.primeiroNome,
+    this.segundoNome,
+    this.email,
+    this.id,
+    this.urlDaFotoDePerfil,
+    this.password
+  });
 
-
-}
-*/
-class Usuario {
-  String _username;
-  String _password;
-  Usuario(this._username, this._password);
-
-  Usuario.map(dynamic obj) {
-    this._username = obj["username"];
-    this._password = obj["password"];
+  factory Usuario.fromJson(Map<String, dynamic> parsedJson) {
+    
+    return Usuario(
+      id: parsedJson['id'].toString(),
+      primeiroNome: parsedJson['first_name'],
+      segundoNome: parsedJson['last_name'],
+      email: parsedJson['email'],
+      
+    );
   }
 
-  String get username => _username;
-  String get password => _password;
-
-  Map<String, dynamic> toMap() {
-    var map = new Map<String, dynamic>();
-    map["username"] = _username;
-    map["password"] = _password;
-
-    return map;
-  }
+  Map<String, dynamic> toJson(Usuario instance) => <String, dynamic>{
+      'email': instance.email,
+      'username': instance.email,
+      'password': instance.password,
+      'first_name': instance.primeiroNome,
+      'last_name': instance.segundoNome,
+      
+    };
 }

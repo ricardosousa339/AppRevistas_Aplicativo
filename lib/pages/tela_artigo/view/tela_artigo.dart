@@ -34,34 +34,16 @@ class _TelaArtigoState extends State<TelaArtigo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+    appBar: AppBar(title: Text(widget.revista,)),
       resizeToAvoidBottomInset: true,
-      resizeToAvoidBottomPadding: true,
-      body: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              SliverAppBar(
-                expandedHeight: 120.0,
-                floating: false,
-                pinned: true,
-                flexibleSpace: FlexibleSpaceBar(
-                  centerTitle: true,
-                  title: Text(widget.revista,
-                      style: TextStyle(
-                        color: Colors.white,
-                        
-                        
-                        fontSize: 20.0,
-                      )),
-                ),
-              ),
-            ];
-          },
+      resizeToAvoidBottomPadding: true,     
           body:   ListView(
-            padding: EdgeInsets.only(bottom: 80),
+            padding: EdgeInsets.only(bottom: 80, top: 20),
             children: <Widget>[
               ListTile(
-                title: Text(widget.artigo.tituloPortugues, style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
+                title: Text(widget.artigo.tituloPortugues, style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold, color: Color.fromARGB(255,163,0,0)),),
               ),
+              Divider(color: Colors.black54,indent: 30,endIndent: 30,),
               ListTile(
                 contentPadding: EdgeInsets.all(5),
                 title: Text('Autor(es):', style: TextStyle(fontWeight: FontWeight.bold),),
@@ -73,20 +55,25 @@ class _TelaArtigoState extends State<TelaArtigo> {
                 
                 leading: Icon(Icons.calendar_today),
                 contentPadding: EdgeInsets.all(5),
-                title: Text('Data:', style: TextStyle(fontSize: 16),),
+                title: Text('Data:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold) ),
                 //TODO: Ajustar quando o Matheus colocar a Data
                 subtitle: Text('22/09/2018'),
               ),
-              Divider(color: Colors.black45,),
+              Divider(color: Colors.black45,indent: 30, endIndent: 30,),
               ListTile(
                   contentPadding: EdgeInsets.all(17),
-                  title: Text('Descrição:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                  subtitle: Text(
-                    widget.artigo.descricaoPortugues,
-                  )),
+                  title: Text('Descrição:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromARGB(255,100,3,3),)),
+                  //TODO: Achar solução pra retirar essas partes erradas
+                  
+                  subtitle: Padding(child: Text(
+                    "\t"+widget.artigo.descricaoPortugues.replaceAll("&nbsp;", " "), style: TextStyle(color: Colors.black87, fontSize: 16,))
+                  ,padding: EdgeInsets.only(left: 10, top: 10),),
+                  
+                  
+                  ),
                   
             ],
-          )),
+          ),
       floatingActionButton: ButtonBar(
         children: <Widget>[
           FloatingActionButton(
@@ -108,11 +95,6 @@ class _TelaArtigoState extends State<TelaArtigo> {
             child: Icon(Icons.star),
             onPressed: () {},
           ),
-          FloatingActionButton(
-            heroTag: null,
-            child: Icon(Icons.comment),
-            onPressed: () {},
-          )
         ],
       ),
     );

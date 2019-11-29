@@ -23,7 +23,8 @@ class TelaComentarios extends StatefulWidget{
       appBar: AppBar(
         title: Text('Comentários'),
       ),
-      body: elementosTelaComentarios()
+      body:
+       elementosTelaComentarios()
       );
           
   
@@ -31,12 +32,11 @@ class TelaComentarios extends StatefulWidget{
 
    elementosTelaComentarios(){
 
-    return 
+TextEditingController controllerComentario = TextEditingController();
 
-
-
-
-FutureBuilder<List<Comentario>> (
+    return ListView(
+      children: <Widget>[
+           FutureBuilder<List<Comentario>> (
         future: getComentario(widget.idNoticia),
           builder: (context, snapshot){
             if(snapshot.hasData){
@@ -44,7 +44,28 @@ FutureBuilder<List<Comentario>> (
             }
             else return Center(child:CircularProgressIndicator());
           },
-);
+),
+
+Card(
+  child: Row(
+    children: <Widget>[
+      TextField(
+        controller: controllerComentario,
+        maxLines: 3,
+      ),
+      RaisedButton(
+        child: Icon(Icons.send),
+        onPressed: (){
+          
+        },
+      )
+    ],
+  ),
+)
+      ],
+    );
+    
+ 
 
     
 

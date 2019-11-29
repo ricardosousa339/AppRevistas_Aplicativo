@@ -1,9 +1,7 @@
 import 'dart:convert';
 
-import 'package:apprevistas_aplicativo/pages/tela_artigo/view/tela_artigo.dart';
 import 'package:apprevistas_aplicativo/pages/tela_edicao/view/bloco_artigo.dart';
 import 'package:apprevistas_aplicativo/pages/tela_revista/model/artigo.dart';
-import 'package:apprevistas_aplicativo/pages/tela_revista/model/edicao.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:http/http.dart' as http;
@@ -78,8 +76,13 @@ class _TelaEdicaoState extends State<TelaEdicao> {
   ListView listaDeArtigo(List <Artigo> artigos){
 
     return ListView.builder(
+      
       itemCount: artigos.length,
       itemBuilder: (context, indice){
+        return Column(children: <Widget>[
+           cardBlocoArtigo(widget.nomeRevista,artigos[indice], context),
+           Divider(height: 10, color: Colors.black54,),
+        ],);
         return cardBlocoArtigo(widget.nomeRevista,artigos[indice], context);
           },
     );

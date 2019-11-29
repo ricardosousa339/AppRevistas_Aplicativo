@@ -7,8 +7,9 @@ import 'package:share/share.dart';
 
 Card cardBlocoArtigo(String revista, Artigo artigo, BuildContext context) {
   return Card(
-      margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
-      elevation: 4.0,
+    color: Colors.white,
+      margin: EdgeInsets.fromLTRB(0, 0, 0, 0),
+     elevation: 0,
       child: Column(children: <Widget>[
        
         ListTile(

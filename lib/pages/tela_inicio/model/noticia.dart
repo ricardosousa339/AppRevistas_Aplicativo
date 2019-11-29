@@ -1,6 +1,12 @@
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:http/http.dart' as http;
+
 class Noticia{
 
-Noticia({this.id,this.titulo, this.subtitulo, this.corpo, this.dataPostagem, this.autor, this.revista, this.linkArtigo,this.imagem});
+Noticia({this.id,this.titulo, this.subtitulo, this.corpo, this.dataPostagem, this.autor, this.revista, this.linkArtigo,this.imagem, this.arquivoImagem});
 
   String id;
   String titulo;
@@ -12,6 +18,7 @@ Noticia({this.id,this.titulo, this.subtitulo, this.corpo, this.dataPostagem, thi
   String revista;
   String linkArtigo;
   String imagem;
+  Uint8List arquivoImagem;
 
 
 //Quando mudar a fonte de dados, só trocar as chaves pra pegar as corretas do banco de dados e salvar como noticia
@@ -29,5 +36,17 @@ factory Noticia.fromJson(Map<String, dynamic> json){
   );
 }
 
+ Map toMap() {
+    var map = new Map<String, dynamic>();
+   
+    map["titulo"] = titulo;
+    map["subtitulo"] = subtitulo;
+    map['corpo'] = corpo;
+    map['revista_relacionada'] = revista;
+    map['link_artigo'] = linkArtigo;
+    map['imagem'] = arquivoImagem;
+ 
+    return map;
+  }
 
 }

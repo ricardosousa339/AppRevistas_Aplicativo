@@ -14,4 +14,16 @@ class Comentario {
      noticia: json['noticia'].toString()
     );
   }
+
+  
+ Map toMap() {
+    var map = new Map<String, dynamic>();
+   
+    map["id"] = id;
+    map["corpo"] = corpo;
+    map['autor'] = autor;
+    map['noticia'] = noticia;
+ 
+    return map;
+  }
 }

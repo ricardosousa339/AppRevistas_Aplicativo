@@ -35,7 +35,7 @@ Future<List<Noticia>> getNoticia() async {
         .get(Uri.encodeFull(uri), headers: {"Accept": "application/json"});
 
     if (response.statusCode == 200) {
-      var data = json.decode(response.body);
+      var data = json.decode(utf8.decode(response.bodyBytes));
       var rest = data as List;
       //print('rest'+rest.toString());
       list = rest.map<Noticia>((json) => Noticia.fromJson(json)).toList();
