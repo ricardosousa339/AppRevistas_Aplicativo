@@ -1,3 +1,7 @@
+import 'package:apprevistas_aplicativo/constantes.dart';
+import 'package:apprevistas_aplicativo/pages/tela_artigo/controller/desfavorita_artigo.dart';
+import 'package:apprevistas_aplicativo/pages/tela_artigo/controller/favorita_artigo.dart';
+import 'package:apprevistas_aplicativo/pages/tela_login/view/solicita_login.dart';
 import 'package:apprevistas_aplicativo/pages/tela_revista/model/artigo.dart';
 import 'package:apprevistas_aplicativo/pages/tela_revista/model/revista.dart';
 import 'package:apprevistas_aplicativo/urls.dart';
@@ -10,8 +14,12 @@ import 'package:url_launcher/url_launcher.dart';
 class TelaArtigo extends StatefulWidget {
   final Artigo artigo;
   final String revista;
+  String idUsuario;
+  String keyy;
+  bool estaNaPaginaFav;
+  String data;
 
-  TelaArtigo({Key key, @required this.artigo, @required this.revista})
+  TelaArtigo({Key key, @required this.artigo, @required this.revista, this.idUsuario, this.keyy, this.estaNaPaginaFav,this.data})
       : super(key: key);
 
   @override
@@ -50,15 +58,19 @@ class _TelaArtigoState extends State<TelaArtigo> {
                 subtitle: Text(autores),
                 leading: Icon(Icons.person),
               ),
+
+
+
+
+              widget.data != null ?
               ListTile(
-                
                 
                 leading: Icon(Icons.calendar_today),
                 contentPadding: EdgeInsets.all(5),
                 title: Text('Data:', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold) ),
                 //TODO: Ajustar quando o Matheus colocar a Data
-                subtitle: Text('22/09/2018'),
-              ),
+                subtitle: Text(widget.data,
+              )) : Text(''),
               Divider(color: Colors.black45,indent: 30, endIndent: 30,),
               ListTile(
                   contentPadding: EdgeInsets.all(17),
@@ -93,7 +105,22 @@ class _TelaArtigoState extends State<TelaArtigo> {
           FloatingActionButton(
             heroTag: null,
             child: Icon(Icons.star),
-            onPressed: () {},
+            onPressed: () async {
+              if(widget.idUsuario != null){
+                if (widget.estaNaPaginaFav == true) {
+                 var res =  await desFavoritaArtigo(widget.idUsuario, widget.artigo.id, widget.keyy);
+                Scaffold.of(context).showSnackBar(new SnackBar(content: Text('Artigo removido dos favoritos')));
+                print(res.body);
+                }
+                else{
+                favoritaArtigo(widget.idUsuario, widget.artigo.id, widget.keyy);
+                Scaffold.of(context).showSnackBar(new SnackBar(content: Text('Artigo adicionado aos favoritos')));
+                }
+              }
+              else{
+                solicitaLogin(context, Constantes.FLAG_TELA_ARTIGO, artigo:widget.artigo, revista: widget.revista);
+              }
+            },
           ),
         ],
       ),
@@ -109,7 +136,5 @@ class _TelaArtigoState extends State<TelaArtigo> {
   }
 }
 
-adicionaArtigoAosFavoritos (){
-  String url = raizApi + '/api/add-artigofavoritousuario/';
-}
+
 }

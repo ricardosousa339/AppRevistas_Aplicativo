@@ -14,8 +14,10 @@ import '../../../urls.dart';
 class TelaRevista extends StatefulWidget {
   final String idRevista;
 final String nomeRevista;
+final idUsuario;
+String keyy;
 
-  TelaRevista({Key key, @required this.idRevista, @required this.nomeRevista});
+  TelaRevista({Key key, @required this.idRevista, @required this.nomeRevista, this.keyy, this.idUsuario});
   @override
   _TelaRevistaState createState() => _TelaRevistaState();
 }
@@ -110,8 +112,10 @@ class _TelaRevistaState extends State<TelaRevista> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => TelaEdicao(
+                        keyy:widget.keyy,
                         nomeRevista: widget.nomeRevista,
                             idEdicao: edicoes[indice].id,
+                            idUsuario: widget.idUsuario,
                           )));
             });
       }),
@@ -119,7 +123,7 @@ class _TelaRevistaState extends State<TelaRevista> {
   }
 
   List<Edicao> ordenaEdicoesPorAno(List<Edicao> edicoes) {
-    edicoes.sort((a, b) => a.dataDeLancamento.compareTo(b.dataDeLancamento));
+    //edicoes.sort((a, b) => a.dataDeLancamento.compareTo(b.dataDeLancamento));
     return edicoes;
   }
 

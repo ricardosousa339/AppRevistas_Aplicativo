@@ -1,88 +1,97 @@
-
+import 'package:apprevistas_aplicativo/constantes.dart';
 import 'package:apprevistas_aplicativo/pages/tela_comentarios/controller/carrega_comentarios.dart';
+import 'package:apprevistas_aplicativo/pages/tela_comentarios/controller/posta_comentario.dart';
 import 'package:apprevistas_aplicativo/pages/tela_comentarios/fragments/bloco_comentario.dart';
 import 'package:apprevistas_aplicativo/pages/tela_comentarios/model/comentario.dart';
+import 'package:apprevistas_aplicativo/pages/tela_login/view/solicita_login.dart';
+import 'package:apprevistas_aplicativo/widgets_pers.dart';
 import 'package:flutter/material.dart';
 
-class TelaComentarios extends StatefulWidget{
+class TelaComentarios extends StatefulWidget {
   final String idNoticia;
-    TelaComentarios({Key key, @required this.idNoticia});
+  final String idDoUsuario;
+
+
+  //Atencao: Essa 'keyy' e a key que o servidor necessita para permitir o envio de dados. 
+  //A 'key' normal e um parametro do flutter que nao utilizamos
+  final String keyy;
+  TelaComentarios({Key key, @required this.idNoticia, @required this.keyy, @required this.idDoUsuario});
   
   @override
   _TelaComentariosState createState() => _TelaComentariosState();
-  
+}
+
+class _TelaComentariosState extends State<TelaComentarios> {
+
+
+
+  static final Key _campoTextoKey = new GlobalKey<FormState>();
+  Key k1 = new GlobalKey();
+TextEditingController controllerComentario;
+@override
+  void initState() {
+   controllerComentario = TextEditingController();
+    super.initState();
   }
-  
-  class _TelaComentariosState extends State<TelaComentarios>{
-
-
+ 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Comentários'),
-      ),
-      body:
-       elementosTelaComentarios()
-      );
-          
-  
+        appBar: AppBar(
+          title: Text('Comentários'),
+        ),
+        body: elementosTelaComentarios());
   }
 
-   elementosTelaComentarios(){
-
-TextEditingController controllerComentario = TextEditingController();
+  elementosTelaComentarios() {
 
     return ListView(
+      physics: const AlwaysScrollableScrollPhysics(),
+      shrinkWrap: true,
       children: <Widget>[
-           FutureBuilder<List<Comentario>> (
-        future: getComentario(widget.idNoticia),
-          builder: (context, snapshot){
-            if(snapshot.hasData){
+        FutureBuilder<List<Comentario>>(
+          future: getComentario(widget.idNoticia),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
               return listaDeComentarios(snapshot.data);
-            }
-            else return Center(child:CircularProgressIndicator());
+            } else
+              return Center(child: CircularProgressIndicator());
           },
-),
+        ),
+        Form(
+          //key: _campoTextoKey,
+         child: Column(
+            children: <Widget>[
+              Card(
+          child:              
+          textFieldComentario('Comentário...', controllerComentario),),
+          Padding(padding: EdgeInsets.all(5),
+          child: 
+           botaoPadrao('Comentar', (){
+             if(widget.idDoUsuario != null && widget.idNoticia != null){
+             postaComentario(widget.idNoticia, widget.idDoUsuario, controllerComentario.text, widget.keyy);
+             }
+             else{
+               solicitaLogin(context, Constantes.FLAG_COMENTARIOS,idNoticia: widget.idNoticia, );
+             }
 
-Card(
-  child: Row(
-    children: <Widget>[
-      TextField(
-        controller: controllerComentario,
-        maxLines: 3,
-      ),
-      RaisedButton(
-        child: Icon(Icons.send),
-        onPressed: (){
-          
-        },
-      )
-    ],
-  ),
-)
-      ],
+              }))
+             
+            ],
+          ),
+        )
+      ]
     );
-    
- 
-
-    
-
-
   }
 
-  ListView listaDeComentarios(List<Comentario> comentarios){
-  
+  ListView listaDeComentarios(List<Comentario> comentarios) {
     return ListView.builder(
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
       itemCount: comentarios.length,
-      itemBuilder: (context, indice){
-        
+      itemBuilder: (context, indice) {
         return blocoComentario(comentarios[indice], context);
-        
       },
     );
- 
   }
-
-  }
+}

@@ -2,11 +2,12 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:apprevistas_aplicativo/pages/tela_revista/model/revista.dart';
 import 'package:http/http.dart' as http;
 
 class Noticia{
 
-Noticia({this.id,this.titulo, this.subtitulo, this.corpo, this.dataPostagem, this.autor, this.revista, this.linkArtigo,this.imagem, this.arquivoImagem});
+Noticia({this.id,this.titulo, this.subtitulo, this.corpo, this.dataPostagem, this.autor, this.revista, this.linkArtigo,this.imagem, this.arquivoImagem, this.objetoRevista});
 
   String id;
   String titulo;
@@ -16,6 +17,7 @@ Noticia({this.id,this.titulo, this.subtitulo, this.corpo, this.dataPostagem, thi
   String autor;
  
   String revista;
+  Revista objetoRevista;
   String linkArtigo;
   String imagem;
   Uint8List arquivoImagem;
@@ -23,6 +25,12 @@ Noticia({this.id,this.titulo, this.subtitulo, this.corpo, this.dataPostagem, thi
 
 //Quando mudar a fonte de dados, só trocar as chaves pra pegar as corretas do banco de dados e salvar como noticia
 factory Noticia.fromJson(Map<String, dynamic> json){
+
+
+  var revistaJson = json['revista_relacionada'];
+    Revista revista =
+        revistaJson != null ? Revista.fromJson(revistaJson) : null;
+
   return Noticia(
     id:json['id'].toString(),
     titulo: json['titulo'],
@@ -30,7 +38,7 @@ factory Noticia.fromJson(Map<String, dynamic> json){
     corpo: json['corpo'],
     dataPostagem: json['data_postagem'],
     autor: json['autor'].toString(),
-    revista : json['revista_relacionada'].toString(),
+    objetoRevista : revista,
     linkArtigo: json['link_artigo'],
     imagem: json['imagem'],
   );

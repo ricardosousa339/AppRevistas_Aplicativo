@@ -5,13 +5,14 @@ import 'package:apprevistas_aplicativo/pages/tela_inicio/view/tela_noticia.dart'
 import 'package:flutter/material.dart';
 import 'package:share/share.dart';
 
-Card cardBlocoNoticia(Noticia noticia, BuildContext context) {
+Card cardBlocoNoticia(Noticia noticia, BuildContext context, String idDoUsuario, String keyy) {
   return Card(
       margin: EdgeInsets.fromLTRB(10, 10, 10, 5),
       elevation: 4.0,
       child: Column(children: <Widget>[
         Row(
           children: <Widget>[
+            Expanded(child: 
             Container(
                 margin: EdgeInsets.fromLTRB(18, 10, 18, 0),
                 alignment: Alignment.centerLeft,
@@ -19,12 +20,16 @@ Card cardBlocoNoticia(Noticia noticia, BuildContext context) {
                   borderRadius: BorderRadius.all(Radius.circular(3)),
                   border: new Border.all(color: Colors.red, width: 1.5),
                 ),
-                child: Text(
-                  noticia.revista,
+                child: 
+                Text(
+                
+
+                  noticia.objetoRevista.nomeRevistaPortugues,
                   style: TextStyle(color: Colors.red),
                   maxLines: 1,
+                  
                   overflow: TextOverflow.ellipsis,
-                )),
+                )),)
           ],
         ),
         ListTile(
@@ -32,7 +37,7 @@ Card cardBlocoNoticia(Noticia noticia, BuildContext context) {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => TelaNoticia(noticia: noticia)));
+                    builder: (context) => TelaNoticia(noticia: noticia, idDoUsuario: idDoUsuario , keyy: keyy)));
           },
           contentPadding: EdgeInsets.fromLTRB(18, 5, 18, 18),
           title: Text(noticia.titulo,
@@ -49,7 +54,7 @@ Card cardBlocoNoticia(Noticia noticia, BuildContext context) {
             child: Icon(Icons.share),
             onTap: () {
               Share.share(
-                  'https://sistemas.uft.edu.br/periodicos/index.php/observatorio');
+                  noticia.linkArtigo);
             },
           ),
         ),

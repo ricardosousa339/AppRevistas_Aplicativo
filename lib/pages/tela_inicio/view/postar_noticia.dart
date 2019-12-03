@@ -4,6 +4,8 @@ import 'dart:core';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:apprevistas_aplicativo/pages/tela_inicio/fragments/cores.dart';
+import 'package:apprevistas_aplicativo/pages/tela_inicio/view/tela_inicial.dart';
+import 'package:apprevistas_aplicativo/trata_imagem.dart';
 import 'package:apprevistas_aplicativo/widgets_pers.dart';
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
@@ -19,10 +21,11 @@ import '../../../urls.dart';
 import 'package:apprevistas_aplicativo/pages/tela_login/model/usuario.dart';
 
 class PostarNoticia extends StatefulWidget {
-  PostarNoticia({this.revistas, this.keyy, this.idUsuario});
+  PostarNoticia({this.revistas, this.keyy, this.idUsuario,this.user});
   final List revistas;
   final String keyy;
   final String idUsuario;
+  final Usuario user;
   @override
   _PostarNoticiaState createState() => _PostarNoticiaState();
 }
@@ -49,7 +52,7 @@ class _PostarNoticiaState extends State<PostarNoticia> {
       appBar: AppBar(
         title: Text('Nova notícia'),
       ),
-      body: corpoPostNoticia(),
+      body: corpoPostNoticia(context),
     );
   }
 
@@ -61,48 +64,33 @@ class _PostarNoticiaState extends State<PostarNoticia> {
     });
   }
 
-  Widget corpoPostNoticia() {
+  Widget corpoPostNoticia(BuildContext context) {
     return Padding(
-        padding: EdgeInsets.all(30),
+        padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
         child: ListView(
           children: <Widget>[
-            TextField(
-              decoration: InputDecoration(
-                //border: InputBorder.none,
-                icon: Icon(Icons.title),
-                hintText: 'Título',
-              ),
-              controller: controllerTitulo,
-            ),
-            TextField(
-              controller: controllerSubtitulo,
-              decoration: InputDecoration(
-                  // border: InputBorder.none,
-                  hintText: 'Subtítulo',
-                  icon: Icon(Icons.subtitles)),
-            ),
-            TextField(
-              controller: controllerCorpo,
-              maxLines: 6,
-              decoration: InputDecoration(
-                  //border: InputBorder.none,
-
-                  hintText: 'Corpo',
-                  icon: Icon(Icons.edit)),
-            ),
-            Column(
-              children: <Widget>[
-
+            textFieldPost('Título', controllerTitulo, Icon(Icons.title),1),
+            Divider(),
+            textFieldPost('Subtítulo', controllerSubtitulo, Icon(Icons.subtitles),1),
+            Divider(),
+            textFieldPost('Corpo', controllerCorpo, Icon(Icons.text_fields), 6),
+            Divider(),
                 Padding(
-                  padding: EdgeInsets.all(5),
+                  padding: EdgeInsets.all(0),
                   child:
-                DropdownButton<String>(
+                  Row(children: <Widget>[
+                    Icon(Icons.library_books,color: Colors.grey,),
+                    Padding(padding: EdgeInsets.fromLTRB(20, 0,10,5),
+                    child: 
+                     DropdownButton<String>(
+                  //icon: Icon(Icons.library_books),
+                  
                   hint: Text('Revista Relacionada'),
                   items:
                       extraiNomeRevistas(widget.revistas).map((String value) {
                     return new DropdownMenuItem(
                       value: value,
-                      child: Text(value),
+                      child: Text(value.length >20 ? value.substring(0,20)+'...': value),
                     );
                   }).toList(),
                   //hint: Text('Revista'),
@@ -112,22 +100,20 @@ class _PostarNoticiaState extends State<PostarNoticia> {
                       _selected = newValue;
                     });
                   },
-                )),
+                )
+                    ,)
+
+
+                  ],)
+               ),
+               Divider(),
                 Padding(
                   padding: EdgeInsets.all(5),
                   child:
-                TextField(
-              controller: controllerLink,
-              decoration: InputDecoration(
-                  // border: InputBorder.none,
-                  hintText: 'Link para o artigo (Opcional)',
-                  icon: Icon(Icons.link)),
-            ),)
-              ],
-            ),
+               textFieldPost('Link para o artigo (Opcional)', controllerLink, Icon(Icons.link), 1)),
+             
+            Divider(),
             
-            Row(
-              children: <Widget>[
                 _image == null
                     ? Text('')
                     : Image.asset(
@@ -139,20 +125,21 @@ class _PostarNoticiaState extends State<PostarNoticia> {
                   padding: EdgeInsets.all(4),
                   child: RaisedButton.icon(
                     color: Colors.cyan,
-                    icon:Icon(Icons.camera),
+                    icon:Icon(Icons.image),
                     label: Text('Escolher Imagem'),
                     onPressed: () async {
                       getImage();
                     },
                   ),
                 ),
-              ],
-            ),
+             
+
             Padding(
                 padding: EdgeInsets.all(5),
                 child: botaoPadrao(
                   'Postar Notícia',
                   () async {
+                    var imagemComprimida  = await comprimeImagemComoArquivo(_image, _image.path);
                     var res = await createPost(
                       widget.keyy,
                       widget.idUsuario,
@@ -161,8 +148,10 @@ class _PostarNoticiaState extends State<PostarNoticia> {
                       controllerCorpo.text,
                       idDaRevista(_selected),
                       controllerLink.text,
-                      utf8.encode(_image.path),
+                      utf8.encode(imagemComprimida.path),
                     );
+
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=> TelaInicial(keyy: widget.keyy,user:widget.user,)));
                     //Noticia noticia = Noticia(titulo: controllerTitulo.text, subtitulo: controllerSubtitulo.text, corpo: controllerCorpo.text, revista:  idDaRevista(_selected),linkArtigo: controllerLink.text, arquivoImagem: _image.readAsBytesSync());
                     //Noticia noticiaPublicada = await createPost((raizApi+'/api/noticias'),body: noticia.toMap());
                     print(res);
@@ -176,7 +165,9 @@ class _PostarNoticiaState extends State<PostarNoticia> {
     List<String> itens = new List();
 
     for (Revista item in revistas) {
+      if(item.nomeRevistaPortugues != "Not found"){
       itens.add(item.nomeRevistaPortugues);
+      }
     }
 
     return itens;

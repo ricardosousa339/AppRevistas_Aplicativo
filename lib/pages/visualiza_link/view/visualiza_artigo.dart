@@ -7,6 +7,7 @@ class VisualizaArtigo extends StatefulWidget{
 VisualizaArtigo({this.url});
 
   String url;
+  String titulo;
   _VisualizaArtigoState createState() => _VisualizaArtigoState();
 
 }
@@ -14,7 +15,10 @@ VisualizaArtigo({this.url});
 class _VisualizaArtigoState extends State<VisualizaArtigo>{
   @override
   Widget build(BuildContext context) {
-    return WebView(initialUrl: widget.url);
+    return Scaffold(
+      appBar: AppBar(title: Text(widget.titulo),),
+      body: WebView(initialUrl: widget.url),
+    );
   }
   
 }

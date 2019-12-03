@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 
 import 'bloco_noticia.dart';
 
-ListView blocosDeNoticias(List<Noticia> noticias, BuildContext context) {
+ListView blocosDeNoticias(List<Noticia> noticias, BuildContext context, String idDoUsuario, keyy) {
     List<Card> cards = [];
 
     for (var not in noticias) {
-      cards.add(cardBlocoNoticia(not,context));
+      cards.add(cardBlocoNoticia(not,context, idDoUsuario, keyy));
     }
 
     return ListView(children: cards);

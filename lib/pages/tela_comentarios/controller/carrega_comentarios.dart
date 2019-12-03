@@ -9,7 +9,7 @@ Future<List<Comentario>> getComentario(String idNoticia) async {
 
   List<Comentario> list;
      String uri =
-        raizApi+'/api/comentarios';
+        raizApi+'/api/get-comentariosnoticia/'+idNoticia;
 
     var response = await http
         .get(Uri.encodeFull(uri), headers: {"Accept": "application/json"});
