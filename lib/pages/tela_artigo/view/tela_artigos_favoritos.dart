@@ -1,6 +1,7 @@
 import 'package:apprevistas_aplicativo/pages/tela_artigo/controller/carrega_artigo.dart';
 import 'package:apprevistas_aplicativo/pages/tela_artigo/controller/carrega_ids_artigos_favoritos.dart';
 import 'package:apprevistas_aplicativo/pages/tela_edicao/view/bloco_artigo.dart';
+import 'package:apprevistas_aplicativo/pages/tela_inicio/fragments/cores.dart';
 import 'package:apprevistas_aplicativo/pages/tela_revista/model/artigo.dart';
 import 'package:apprevistas_aplicativo/pages/tela_revista/model/revista.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class _TelaArtigosFavoritosState extends State<TelaArtigosFavoritos> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: corPrincipal,
           title: Text('Artigos favoritos'),
         ),
         body: FutureBuilder(

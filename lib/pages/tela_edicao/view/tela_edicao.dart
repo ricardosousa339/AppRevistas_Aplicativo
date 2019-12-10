@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:apprevistas_aplicativo/pages/tela_busca_artigo/view/tela_busca_artigo.dart';
 import 'package:apprevistas_aplicativo/pages/tela_edicao/controller/carrega_artigos_da_edicao.dart';
 import 'package:apprevistas_aplicativo/pages/tela_edicao/view/bloco_artigo.dart';
 import 'package:apprevistas_aplicativo/pages/tela_inicio/fragments/cores.dart';
@@ -43,9 +44,15 @@ class _TelaEdicaoState extends State<TelaEdicao> {
         },
       ),
       floatingActionButton: FloatingActionButton(child: Icon(Icons.search),onPressed: (){
-
-
+       
         
+
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => TelaBuscaArtigo(
+                                  keyy: widget.keyy,
+                                  idUsuario: widget.idUsuario)));
       },),
 
       

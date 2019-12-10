@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Usuario {
   String key;
 
@@ -28,6 +30,7 @@ class Usuario {
       primeiroNome: parsedJson['first_name'],
       segundoNome: parsedJson['last_name'],
       email: parsedJson['email'],
+      eAdministrador: parsedJson['administrador']
       
     );
   }
@@ -38,6 +41,6 @@ class Usuario {
       'password': instance.password,
       'first_name': instance.primeiroNome,
       'last_name': instance.segundoNome,
-      
+      'administrador':instance.eAdministrador
     };
 }

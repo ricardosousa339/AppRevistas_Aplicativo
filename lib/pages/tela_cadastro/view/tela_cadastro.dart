@@ -2,9 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:apprevistas_aplicativo/pages/tela_cadastro/controller/cadastra_usuario.dart';
 import 'package:apprevistas_aplicativo/pages/tela_inicio/fragments/cores.dart';
 import 'package:apprevistas_aplicativo/pages/tela_inicio/view/tela_inicial.dart';
 import 'package:apprevistas_aplicativo/pages/tela_login/controller/faz_login.dart';
+import 'package:apprevistas_aplicativo/pages/tela_login/controller/get_id_server.dart';
 import 'package:apprevistas_aplicativo/pages/tela_login/controller/get_usuario.dart';
 import 'package:apprevistas_aplicativo/pages/tela_login/model/usuario.dart';
 import 'package:apprevistas_aplicativo/widgets_pers.dart';
@@ -12,6 +14,7 @@ import 'package:apprevistas_aplicativo/widgets_pers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../urls.dart';
 
 class TelaCadastro extends StatefulWidget {
@@ -82,21 +85,38 @@ final snackBar = SnackBar(content: Text('Nenhum campo deve ser deixado em branco
                 }
                 
                 else{
- var res = await _cadastraUsuario(
+ var res = await cadastraUsuario(
                     controllerPrimeiroNome.text,
                     controllerSegundoNome.text,
                     controllerEmail.text,
-                    controllerSenha.text, context);
+                    controllerSenha.text, context,_scaffoldKey);
 
-                if(res == 201){
+                if(res == 201 || res ==200){
                   var res2 = await  loginUser(controllerEmail.text, controllerSenha.text);
+
+                  
                   Usuario usuario = await getUsuario(controllerEmail.text);
-                  usuario.key = res2['key'];
+                   List attr = await getIdServerEEAdministrador(usuario.id);
+
+                      usuario.idServer = attr[0].toString();
+                      usuario.eAdministrador = attr[1];
+                  usuario.key = json.decode(res2.data)['key'];
+
+                   SharedPreferences prefs = await SharedPreferences.getInstance();
+                      await prefs.setString('key', usuario.key);
+                      await prefs.setString('primeiroNome', usuario.primeiroNome);
+                      await prefs.setString('segundoNome', usuario.segundoNome);
+                      await prefs.setString('email', usuario.email);
+                      await prefs.setString('id', usuario.id);
+                      await prefs.setString('idServer', usuario.idServer);
+                      await prefs.setString('urlDaFotoDePerfil', usuario.urlDaFotoDePerfil);
+                      await prefs.setBool('eAdministrador', usuario.eAdministrador);
+                      
  Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => TelaInicial(
                           flag: 'cadastro',
                           user: usuario,
-                          keyy: res2['key'],
+                          keyy: usuario.key,
                         )));
                 }
                 
@@ -113,34 +133,6 @@ final snackBar = SnackBar(content: Text('Nenhum campo deve ser deixado em branco
     );
   }
 
-//Cadastra o usuario, passadas as informacoes
-  Future<dynamic> _cadastraUsuario(
-      String nome, String sobrenome, String email, String password, BuildContext context) async {
-  
-
-    Usuario user = Usuario(
-        email: email,
-        primeiroNome: nome,
-        segundoNome: sobrenome,
-        password: password);
-
-    var res = await http.post(raizApi + '/api/usuarios/',
-        body: json.encode(user.toJson(user)),
-        headers: {
-          "Content-Type": "application/json"
-        });
-
-
-final snackBar = SnackBar(content: Text(utf8.decode(res.bodyBytes)));
-  
-  if(res.statusCode != 201){
-    _scaffoldKey.currentState.showSnackBar(snackBar);  
-  }
-
-
-  return (res.statusCode);
-   
-  }
   
 
 }

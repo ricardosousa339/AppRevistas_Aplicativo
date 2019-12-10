@@ -179,6 +179,7 @@ class _TelaInicialState extends State<TelaInicial> {
               )
             : _indicePaginaInferior == 1
                 ? FloatingActionButton(
+                  backgroundColor: corTerciaria,
                     child: Icon(Icons.search),
                     onPressed: () {
                       Navigator.push(
@@ -250,7 +251,7 @@ class _TelaInicialState extends State<TelaInicial> {
                           fontSize: 25,
                           color: Colors.white,
                         ),
-                        maxLines: 1,
+                        maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                       ),
                     )
@@ -275,55 +276,7 @@ class _TelaInicialState extends State<TelaInicial> {
       }),
     );
   }
-  //Retorna todo o corpo da página que aparece quando se clica pra trocar de Notícias pra Revistas
-
-  Column paginaRevistas(List<Revista> revistas) {
-    instance = new CarouselSlider(
-      aspectRatio: 16 / 9,
-      initialPage: 0,
-      autoPlayCurve: Curves.easeInOut,
-      autoPlayDuration: new Duration(seconds: 1),
-      items: revistas == null
-          ? null
-          : revistas.map(
-              (it) {
-                return new Container(
-                    width: MediaQuery.of(context).size.width,
-                    margin: new EdgeInsets.symmetric(horizontal: 5.0),
-                    //decoration: new BoxDecoration(color: Colors.white),
-                    child: GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => TelaRevista(
-                                        keyy: widget.keyy,
-                                        nomeRevista: it.nomeRevistaPortugues,
-                                        idRevista: (it.id.toString()),
-                                        idUsuario: widget.user != null
-                                            ? widget.user.idServer
-                                            : null,
-                                      )));
-                        },
-                        child: Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(color: Colors.grey),
-                            child: Container(
-                              child: Image.network(it.imagem),
-                            ))));
-              },
-            ).toList(),
-      //height: 300,
-    );
-    return Column(
-      children: <Widget>[
-        Flexible(
-          flex: 6,
-          child: instance,
-        )
-      ],
-    );
-  }
+  
 
   //As noticias usam id, o identificador do banco de dados
   //Pra adicionar um artigo aos favoritos, usa o id do banco de dados
