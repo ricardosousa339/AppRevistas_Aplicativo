@@ -1,4 +1,5 @@
 import 'package:apprevistas_aplicativo/pages/tela_comentarios/view/tela_comentarios.dart';
+import 'package:apprevistas_aplicativo/pages/tela_inicio/fragments/cores.dart';
 import 'package:apprevistas_aplicativo/pages/tela_inicio/fragments/textoCorpoNoticia.dart';
 import 'package:apprevistas_aplicativo/pages/tela_inicio/fragments/textoTituloNoticia.dart';
 import 'package:apprevistas_aplicativo/pages/tela_inicio/model/noticia.dart';
@@ -23,6 +24,7 @@ class _TelaNoticiaState extends State<TelaNoticia> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: corPrincipal,
           title: Text(widget.noticia.objetoRevista.nomeRevistaPortugues),
         ),
         body: ListView(
@@ -34,7 +36,7 @@ class _TelaNoticiaState extends State<TelaNoticia> {
                 style: TextStyle(
                     fontSize: 35,
                     fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 163, 0, 0)),
+                    color: corTitulos),
               ),
             ),
             Divider(
@@ -56,6 +58,7 @@ class _TelaNoticiaState extends State<TelaNoticia> {
                   EdgeInsets.only(left: 30, top: 10, bottom: 10, right: 30),
             ),
 
+            widget.noticia.imagem == null ? Text(''):
             Image.network(widget.noticia.imagem, fit: BoxFit.fitWidth,height: 250,),
 
             //Divider(color: Colors.black26,indent: 30,endIndent: 30,),
@@ -64,7 +67,7 @@ class _TelaNoticiaState extends State<TelaNoticia> {
                 'Autor(a)',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              subtitle: Text(widget.noticia.autor),
+              subtitle: Text(widget.noticia.nomeAutor),
               leading: Icon(Icons.person),
             ),
             ListTile(

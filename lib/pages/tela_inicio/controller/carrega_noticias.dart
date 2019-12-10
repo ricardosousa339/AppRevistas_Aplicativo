@@ -40,7 +40,11 @@ Future<List<Noticia>> getNoticia() async {
       //print('rest'+rest.toString());
       list = rest.map<Noticia>((json) => Noticia.fromJson(json)).toList();
       //print('listaaaa de edicoes:' + list.toString());
+    return list;
+
+    }
+    else{
+      return List();
     }
 
-    return list;
   }

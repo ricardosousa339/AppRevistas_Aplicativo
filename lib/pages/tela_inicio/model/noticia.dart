@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 class Noticia{
 
-Noticia({this.id,this.titulo, this.subtitulo, this.corpo, this.dataPostagem, this.autor, this.revista, this.linkArtigo,this.imagem, this.arquivoImagem, this.objetoRevista});
+Noticia({this.id,this.titulo, this.subtitulo, this.corpo, this.dataPostagem, this.autor, this.revista, this.linkArtigo,this.imagem, this.arquivoImagem, this.objetoRevista, this.nomeAutor});
 
   String id;
   String titulo;
@@ -15,6 +15,7 @@ Noticia({this.id,this.titulo, this.subtitulo, this.corpo, this.dataPostagem, thi
   String corpo;
   String dataPostagem;
   String autor;
+  String nomeAutor;
  
   String revista;
   Revista objetoRevista;
@@ -41,6 +42,7 @@ factory Noticia.fromJson(Map<String, dynamic> json){
     objetoRevista : revista,
     linkArtigo: json['link_artigo'],
     imagem: json['imagem'],
+    nomeAutor: json['nome_autor']
   );
 }
 

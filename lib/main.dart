@@ -1,4 +1,5 @@
 
+import 'package:apprevistas_aplicativo/constantes.dart';
 import 'package:apprevistas_aplicativo/pages/tela_inicio/fragments/modal_login.dart';
 import 'package:apprevistas_aplicativo/pages/tela_inicio/view/tela_inicial.dart';
 import 'package:apprevistas_aplicativo/pages/tela_login/model/usuario.dart';
@@ -19,9 +20,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       
       theme: ThemeData(
-        primarySwatch: Colors.red,
+        primarySwatch: Colors.teal,
       ),
-      home: TelaInicial()
+      home: TelaInicial(flag: Constantes.INICIO_APLICACAO,)
     );
   }
 }

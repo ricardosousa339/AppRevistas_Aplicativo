@@ -85,9 +85,11 @@ Widget textFieldComentario(String text, TextEditingController controller){
 
 Widget textFieldPost(String text, TextEditingController controller, Icon icon, int maxLines){
   return TextField(
+    
     maxLines: maxLines,
     controller: controller,
     decoration: InputDecoration(
+      focusColor: corTerciaria,
       icon: icon,
       hintText: text,
       contentPadding: EdgeInsets.all(13),

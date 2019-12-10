@@ -3,6 +3,7 @@ import 'package:apprevistas_aplicativo/pages/tela_comentarios/controller/carrega
 import 'package:apprevistas_aplicativo/pages/tela_comentarios/controller/posta_comentario.dart';
 import 'package:apprevistas_aplicativo/pages/tela_comentarios/fragments/bloco_comentario.dart';
 import 'package:apprevistas_aplicativo/pages/tela_comentarios/model/comentario.dart';
+import 'package:apprevistas_aplicativo/pages/tela_inicio/fragments/cores.dart';
 import 'package:apprevistas_aplicativo/pages/tela_login/view/solicita_login.dart';
 import 'package:apprevistas_aplicativo/widgets_pers.dart';
 import 'package:flutter/material.dart';
@@ -38,8 +39,10 @@ TextEditingController controllerComentario;
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: corPrincipal,
           title: Text('Comentários'),
         ),
+        backgroundColor: Colors.white,
         body: elementosTelaComentarios());
   }
 
@@ -67,9 +70,12 @@ TextEditingController controllerComentario;
           textFieldComentario('Comentário...', controllerComentario),),
           Padding(padding: EdgeInsets.all(5),
           child: 
-           botaoPadrao('Comentar', (){
+           botaoPadrao('Comentar', ()async{
              if(widget.idDoUsuario != null && widget.idNoticia != null){
-             postaComentario(widget.idNoticia, widget.idDoUsuario, controllerComentario.text, widget.keyy);
+             await postaComentario(widget.idNoticia, widget.idDoUsuario, controllerComentario.text, widget.keyy);
+             setState(() {
+               controllerComentario.text='';
+             });
              }
              else{
                solicitaLogin(context, Constantes.FLAG_COMENTARIOS,idNoticia: widget.idNoticia, );
@@ -86,11 +92,17 @@ TextEditingController controllerComentario;
 
   ListView listaDeComentarios(List<Comentario> comentarios) {
     return ListView.builder(
+      
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       itemCount: comentarios.length,
       itemBuilder: (context, indice) {
-        return blocoComentario(comentarios[indice], context);
+        return Column(
+          children: <Widget>[
+blocoComentario(comentarios[indice], context),
+Divider(color: Colors.black54,)
+          ],
+        );
       },
     );
   }

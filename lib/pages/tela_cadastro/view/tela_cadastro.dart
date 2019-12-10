@@ -34,12 +34,12 @@ class _TelaCadastroState extends State<TelaCadastro> {
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text('Cadastro'),
-        backgroundColor: corTerciaria,
+        //backgroundColor: corTerciaria,
       ),
       body: ListView(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.fromLTRB(20,40,20,20),
             child: textFieldPadrao('Nome', controllerPrimeiroNome)
           ),
           Padding(
@@ -59,7 +59,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
             child: textFieldSenha('Confirmar senha', controllerConfirmarSenha)
           ),
           Padding(
-            padding: EdgeInsets.all(30),
+            padding: EdgeInsets.fromLTRB(50, 20,50,20),
           
               child: botaoPadrao('Cadastrar', () async {
                 

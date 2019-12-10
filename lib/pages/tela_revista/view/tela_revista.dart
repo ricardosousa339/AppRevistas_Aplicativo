@@ -30,7 +30,6 @@ class _TelaRevistaState extends State<TelaRevista> {
   List gradee;
   PageView listaDeEdicoesPorAno = new PageView();
 
-  List<Edicao> edicoes = new List();
 
   @override
   void initState() {
@@ -47,12 +46,21 @@ class _TelaRevistaState extends State<TelaRevista> {
     return Scaffold(
         appBar: AppBar(
           title: Text(tituloAno),
+          backgroundColor: corPrincipal,
         ),
         body: FutureBuilder(
           future: carregaEdicoes(),
 
           builder: (context, snapshot) {
-            return gradeEdicoes();
+            if(snapshot.connectionState == ConnectionState.waiting){
+              return Center(child: CircularProgressIndicator(),);
+            }
+            else if(snapshot.connectionState == ConnectionState.done){
+            return gradeEdicoes(snapshot.data);
+            }
+            else{
+              return Text('Houve um problema');
+            }
           },
 
           // : Center(child: CircularProgressIndicator());
@@ -77,47 +85,21 @@ class _TelaRevistaState extends State<TelaRevista> {
       //print('listaaaa de edicoes:' + list.toString());
     }
 
-    setState(() {
-      edicoes = list;
-    });
+ 
     //print('listaaaa de edicoes:' + list.toString());
     return list;
   }
 
-  GridView gradeEdicoes() {
+  GridView gradeEdicoes(List<Edicao> edicoes) {
     ordenaEdicoesPorAno(edicoes);
 
     return GridView.count(
+      childAspectRatio: 3/5,
       crossAxisCount: 2,
       children: List.generate(edicoes.length, (indice) {
-        return GestureDetector(
-            child: Card(
-                child: Container(
-                    child: Stack(
-                      alignment: AlignmentDirectional.bottomCenter,
-              children: <Widget>[
-                Image.asset('images/default_logo.png'),
-                Container(
-                  color: Colors.black54,
-                  //padding: EdgeInsets.fromLTRB(5, 100, 5, 5),
-                  child: Text(
-                    edicoes[indice].nomePortugues,
-                    style: TextStyle(fontSize: 25,color: Colors.white),
-                  ),
-                )
-              ],
-            ))),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => TelaEdicao(
-                        keyy:widget.keyy,
-                        nomeRevista: widget.nomeRevista,
-                            idEdicao: edicoes[indice].id,
-                            idUsuario: widget.idUsuario,
-                          )));
-            });
+        
+        return blocoEdicao(edicoes, indice, context, widget.keyy, widget.nomeRevista, widget.idUsuario);
+        
       }),
     );
   }

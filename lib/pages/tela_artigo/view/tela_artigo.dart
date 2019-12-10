@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:apprevistas_aplicativo/constantes.dart';
 import 'package:apprevistas_aplicativo/pages/tela_artigo/controller/desfavorita_artigo.dart';
 import 'package:apprevistas_aplicativo/pages/tela_artigo/controller/favorita_artigo.dart';
+import 'package:apprevistas_aplicativo/pages/tela_inicio/fragments/cores.dart';
 import 'package:apprevistas_aplicativo/pages/tela_login/view/solicita_login.dart';
 import 'package:apprevistas_aplicativo/pages/tela_revista/model/artigo.dart';
 import 'package:apprevistas_aplicativo/pages/tela_revista/model/revista.dart';
 import 'package:apprevistas_aplicativo/urls.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:share/share.dart';
@@ -28,7 +32,13 @@ class TelaArtigo extends StatefulWidget {
 
 class _TelaArtigoState extends State<TelaArtigo> {
   String autores;
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
+
+
+
+
+  
   @override
   void initState() {
     autores = "";
@@ -42,14 +52,17 @@ class _TelaArtigoState extends State<TelaArtigo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-    appBar: AppBar(title: Text(widget.revista,)),
+      key: _scaffoldKey,
+    appBar: AppBar(
+      backgroundColor: corPrincipal,
+      title: Text(widget.revista,)),
       resizeToAvoidBottomInset: true,
       resizeToAvoidBottomPadding: true,     
           body:   ListView(
             padding: EdgeInsets.only(bottom: 80, top: 20),
             children: <Widget>[
               ListTile(
-                title: Text(widget.artigo.tituloPortugues, style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold, color: Color.fromARGB(255,163,0,0)),),
+                title: Text(widget.artigo.tituloPortugues, style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold, color: corTitulos)),
               ),
               Divider(color: Colors.black54,indent: 30,endIndent: 30,),
               ListTile(
@@ -74,7 +87,7 @@ class _TelaArtigoState extends State<TelaArtigo> {
               Divider(color: Colors.black45,indent: 30, endIndent: 30,),
               ListTile(
                   contentPadding: EdgeInsets.all(17),
-                  title: Text('Descrição:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromARGB(255,100,3,3),)),
+                  title: Text('Descrição:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: corSubtitulos,)),
                   //TODO: Achar solução pra retirar essas partes erradas
                   
                   subtitle: Padding(child: Text(
@@ -89,6 +102,7 @@ class _TelaArtigoState extends State<TelaArtigo> {
       floatingActionButton: ButtonBar(
         children: <Widget>[
           FloatingActionButton(
+            backgroundColor: corTerciaria,
             heroTag: null,
             child: Icon(Icons.share),
             onPressed: () {
@@ -96,6 +110,7 @@ class _TelaArtigoState extends State<TelaArtigo> {
             },
           ),
           FloatingActionButton(
+            backgroundColor: corTerciaria,
             heroTag: null,
             child: Icon(Icons.picture_as_pdf),
             onPressed: () {
@@ -103,18 +118,43 @@ class _TelaArtigoState extends State<TelaArtigo> {
             },
           ),
           FloatingActionButton(
+            backgroundColor: corTerciaria,
             heroTag: null,
-            child: Icon(Icons.star),
+            child: widget.estaNaPaginaFav ? Icon(Icons.delete) : Icon(Icons.star),
             onPressed: () async {
               if(widget.idUsuario != null){
                 if (widget.estaNaPaginaFav == true) {
                  var res =  await desFavoritaArtigo(widget.idUsuario, widget.artigo.id, widget.keyy);
-                Scaffold.of(context).showSnackBar(new SnackBar(content: Text('Artigo removido dos favoritos')));
-                print(res.body);
+                String mensagem;
+                if(res.statusCode!= 200){
+                  mensagem = json.decode(res.body)[0];
+
+                }
+                else {
+                  mensagem = 'Artigo removido dos favoritos';
+
+                  print(res);
+                }
+                 final snackBar = SnackBar(content: Text(mensagem));
+
+                  _scaffoldKey.currentState.showSnackBar(snackBar); 
                 }
                 else{
-                favoritaArtigo(widget.idUsuario, widget.artigo.id, widget.keyy);
-                Scaffold.of(context).showSnackBar(new SnackBar(content: Text('Artigo adicionado aos favoritos')));
+                var res = await favoritaArtigo(widget.idUsuario, widget.artigo.id, widget.keyy);
+                String mensagem;
+                if(res.statusCode!= 200){
+                  mensagem = json.decode(res.body)[0];
+
+                }
+                else {
+                  mensagem = 'Artigo adicionado aos favoritos';
+
+                  
+                  print(res);
+                }
+                final snackBar = SnackBar(content: Text(mensagem));
+
+                  _scaffoldKey.currentState.showSnackBar(snackBar); 
                 }
               }
               else{

@@ -7,6 +7,8 @@ class Usuario {
   String id;
   String urlDaFotoDePerfil;
   String password;
+  String idServer;
+  bool eAdministrador;
 
   Usuario({
     this.key,
@@ -15,8 +17,9 @@ class Usuario {
     this.email,
     this.id,
     this.urlDaFotoDePerfil,
-    this.password
-  });
+    this.password,
+    this.idServer,
+    this.eAdministrador  });
 
   factory Usuario.fromJson(Map<String, dynamic> parsedJson) {
     

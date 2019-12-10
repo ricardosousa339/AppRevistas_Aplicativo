@@ -7,14 +7,11 @@ import 'package:http/http.dart' as http;
 
 Future<dynamic> postaComentario(String idDaNoticia, String idDoAutor, String corpo, String key) async {
   
-
-
- 
-   
    Comentario comentario = Comentario(
-     autor: idDoAutor,
+     //autor: idDoAutor,
      noticia: idDaNoticia,
-     corpo: corpo
+     corpo: corpo,
+     idAutor: idDoAutor
    );
 
 var resposta = await http.post(raizApi+ '/api/create-comentarios/',

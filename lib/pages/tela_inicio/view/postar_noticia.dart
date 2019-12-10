@@ -50,6 +50,7 @@ class _PostarNoticiaState extends State<PostarNoticia> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: corPrincipal,
         title: Text('Nova notícia'),
       ),
       body: corpoPostNoticia(context),
@@ -57,7 +58,7 @@ class _PostarNoticiaState extends State<PostarNoticia> {
   }
 
   Future getImage() async {
-    var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    var image = await ImagePicker.pickImage(source: ImageSource.gallery,imageQuality: 80,maxHeight: 500,maxWidth: 500);
 
     setState(() {
       _image = image;
@@ -116,15 +117,16 @@ class _PostarNoticiaState extends State<PostarNoticia> {
             
                 _image == null
                     ? Text('')
-                    : Image.asset(
-                        _image.path,
+                    : Image.file(
+                        _image,
                         width: 150,
                         height: 150,
                       ),
                 Padding(
                   padding: EdgeInsets.all(4),
                   child: RaisedButton.icon(
-                    color: Colors.cyan,
+                    
+                    color: corSecundaria,
                     icon:Icon(Icons.image),
                     label: Text('Escolher Imagem'),
                     onPressed: () async {
@@ -139,7 +141,7 @@ class _PostarNoticiaState extends State<PostarNoticia> {
                 child: botaoPadrao(
                   'Postar Notícia',
                   () async {
-                    var imagemComprimida  = await comprimeImagemComoArquivo(_image, _image.path);
+                    //var imagemComprimida  = await comprimeImagemComoArquivo(_image, _image.path);
                     var res = await createPost(
                       widget.keyy,
                       widget.idUsuario,
@@ -148,7 +150,7 @@ class _PostarNoticiaState extends State<PostarNoticia> {
                       controllerCorpo.text,
                       idDaRevista(_selected),
                       controllerLink.text,
-                      utf8.encode(imagemComprimida.path),
+                      utf8.encode(_image.path),
                     );
 
                     Navigator.of(context).push(MaterialPageRoute(builder: (context)=> TelaInicial(keyy: widget.keyy,user:widget.user,)));
@@ -212,11 +214,11 @@ class _PostarNoticiaState extends State<PostarNoticia> {
 
     var uri = Uri.parse(raizApi + '/api/create-noticias/');
     var request = new http.MultipartRequest("POST", uri);
-    request.fields['id'] = id;
+    //request.fields['id'] = id;
     request.fields['titulo'] = titulo;
     request.fields['subtitulo'] = subtitulo;
     request.fields['corpo'] = corpo;
-    request.fields['autor'] = widget.idUsuario;
+    request.fields['id_autor'] = widget.idUsuario;
     request.fields['revista_relacionada'] = revista;
     request.fields['link_artigo'] = linkArtigo;
 

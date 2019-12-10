@@ -16,8 +16,7 @@ Future<List<Revista>> carregaRevistas() async {
       //print('rest'+rest.toString());
       revistas = rest.map<Revista>((json) => Revista.fromJson(json)).toList();
       //print('listaaaa de edicoes:' + list.toString());
-    }
-    
+       
     List remover = List();
     for (Revista item in revistas) {
       if (item.nomeRevistaPortugues == "Not found") {
@@ -29,4 +28,9 @@ Future<List<Revista>> carregaRevistas() async {
     
     return revistas;
 
+    }
+    else{
+      return List();
+    }
+   
 }

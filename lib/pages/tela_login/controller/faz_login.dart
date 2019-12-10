@@ -2,6 +2,7 @@
   import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../urls.dart';
 
@@ -27,12 +28,13 @@ Future<dynamic> loginUser(String email, String password) async {
           data: {"username": email, "password": password}, options: options);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        var responseJson = json.decode(response.data);
-        return responseJson;
-      } else if (response.statusCode == 401) {
-        throw Exception("Incorrect Email/Password");
-      } else
-        throw Exception('Authentication Error');
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+ 
+  
+        return response;
+      } else{
+        return response;
+      }
     } on DioError catch (exception) {
       if (exception == null ||
           exception.toString().contains('SocketException')) {

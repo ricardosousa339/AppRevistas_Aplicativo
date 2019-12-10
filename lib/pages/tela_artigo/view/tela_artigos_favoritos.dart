@@ -7,10 +7,11 @@ import 'package:flutter/material.dart';
 
 class TelaArtigosFavoritos extends StatefulWidget {
   final String idDoUsuario;
+  final String idUsuarioServer;
   List<Revista> revistas;
   String keyy;
 
-  TelaArtigosFavoritos({this.idDoUsuario, this.revistas, this.keyy});
+  TelaArtigosFavoritos({this.idDoUsuario, this.revistas, this.keyy, this.idUsuarioServer});
 
   _TelaArtigosFavoritosState createState() => _TelaArtigosFavoritosState();
 }
@@ -27,7 +28,7 @@ class _TelaArtigosFavoritosState extends State<TelaArtigosFavoritos> {
           builder:
               (BuildContext context, AsyncSnapshot<List<Artigo>> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator();
+              return Center(child: CircularProgressIndicator(),);
              
             } else {
 
@@ -42,7 +43,7 @@ class _TelaArtigosFavoritosState extends State<TelaArtigosFavoritos> {
                   return Column(
                     children: <Widget>[
                       cardBlocoArtigo(nomeDaRevista, snapshot.data[indice],
-                      context, widget.keyy, widget.idDoUsuario, true),
+                      context, widget.keyy, widget.idUsuarioServer, true),
                       Divider(height: 10,)
                     ],
                   );

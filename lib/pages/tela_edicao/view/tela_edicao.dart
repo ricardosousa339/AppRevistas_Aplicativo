@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:apprevistas_aplicativo/pages/tela_edicao/controller/carrega_artigos_da_edicao.dart';
 import 'package:apprevistas_aplicativo/pages/tela_edicao/view/bloco_artigo.dart';
+import 'package:apprevistas_aplicativo/pages/tela_inicio/fragments/cores.dart';
 import 'package:apprevistas_aplicativo/pages/tela_revista/model/artigo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -30,6 +31,7 @@ class _TelaEdicaoState extends State<TelaEdicao> {
 
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: corPrincipal,
         title: Text('Artigos'),
       ),
       body: FutureBuilder(
@@ -39,20 +41,16 @@ class _TelaEdicaoState extends State<TelaEdicao> {
           return listaDeArtigo(snapshot.data);
           return Center(child: CircularProgressIndicator(),);
         },
-      )
+      ),
+      floatingActionButton: FloatingActionButton(child: Icon(Icons.search),onPressed: (){
+
+
+        
+      },),
 
       
     );
-
-
-    
-
-
   }
-
-
-
-
 
   ListView listaDeArtigo(List <Artigo> artigos){
 
