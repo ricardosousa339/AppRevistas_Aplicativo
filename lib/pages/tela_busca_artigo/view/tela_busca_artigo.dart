@@ -1,4 +1,5 @@
 
+import 'package:apprevistas_aplicativo/constantes.dart';
 import 'package:apprevistas_aplicativo/pages/tela_edicao/view/bloco_artigo.dart';
 import 'package:apprevistas_aplicativo/pages/tela_revista/model/artigo.dart';
 import 'package:apprevistas_aplicativo/urls.dart';
@@ -8,8 +9,10 @@ import 'package:flutter/material.dart';
 class TelaBuscaArtigo extends StatefulWidget{
   String keyy;
   String idUsuario;
+  String flag;
+  String idEdicao;
 
-  TelaBuscaArtigo({this.keyy,this.idUsuario});
+  TelaBuscaArtigo({this.keyy,this.idUsuario, this.flag, this.idEdicao});
 
   _TelaBuscaArtigoState createState() => _TelaBuscaArtigoState();
 }
@@ -23,13 +26,15 @@ class _TelaBuscaArtigoState extends State<TelaBuscaArtigo>{
   List names = new List(); // names we get from API
   List filteredNames = new List(); // names filtered by search text
   Icon _searchIcon = new Icon(Icons.search); 
-  Widget _appBarTitle = new Text( 'Busca de artigos' );
-  bool estaCarregando = false;
+  Widget _appBarTitle;
+    bool estaCarregando = false;
 
 @override
   void initState() {
    // estaCarregando = true;
    //_getNames("");
+  _appBarTitle = widget.flag == Constantes.BUSCA_EDICAO ? new Text('Busca na Edição') : new Text( 'Busca de artigos' );
+
     super.initState();
   }
 
@@ -49,7 +54,10 @@ class _TelaBuscaArtigoState extends State<TelaBuscaArtigo>{
     estaCarregando = true;
       
     });
-  final response = await dio.get(raizApi+'/api/artigos'+'?search'+busca);
+
+
+  String url = widget.flag == Constantes.BUSCA_EDICAO ? raizApi+'/api/artigos'+'?search'+busca : raizApi +'/'+widget.idEdicao;
+  final response = await dio.get(url);
   List tempList = new List();
   for (int i = 0; i < response.data.length; i++) {
     tempList.add(response.data[i]);

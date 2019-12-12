@@ -15,7 +15,7 @@ Future<dynamic> cadastraUsuario(
         email: email,
         primeiroNome: nome,
         segundoNome: sobrenome,
-        password: password, eAdministrador: true);
+        password: password);
 
     var res = await http.post(raizApi + '/api/usuarios/',
     

@@ -8,5 +8,7 @@ static final FLAG_ADICIONAR_AOS_FAVORITOS = 'add_aos_favoritos';
 
   static final String INICIO_APLICACAO = 'inicio_aplicacao';
 
+  static Object BUSCA_EDICAO;
+
 
 }

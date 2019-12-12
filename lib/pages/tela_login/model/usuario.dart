@@ -41,6 +41,5 @@ class Usuario {
       'password': instance.password,
       'first_name': instance.primeiroNome,
       'last_name': instance.segundoNome,
-      'administrador':instance.eAdministrador
     };
 }
