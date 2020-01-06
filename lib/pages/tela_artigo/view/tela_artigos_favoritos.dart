@@ -41,7 +41,7 @@ class _TelaArtigosFavoritosState extends State<TelaArtigosFavoritos> {
                   int idRevista =
                       int.parse(snapshot.data[indice].categoria.idDaRevista);
                   String nomeDaRevista =
-                      widget.revistas[idRevista].nomeRevistaPortugues;
+                      'Artigo';
                   return Column(
                     children: <Widget>[
                       cardBlocoArtigo(nomeDaRevista, snapshot.data[indice],

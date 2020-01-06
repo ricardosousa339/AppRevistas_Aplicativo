@@ -94,7 +94,7 @@ class _TelaRevistaState extends State<TelaRevista> {
     ordenaEdicoesPorAno(edicoes);
 
     return GridView.count(
-      childAspectRatio: 3/5,
+      childAspectRatio: 3/4,
       crossAxisCount: 2,
       children: List.generate(edicoes.length, (indice) {
         

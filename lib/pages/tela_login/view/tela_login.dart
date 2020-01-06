@@ -143,7 +143,7 @@ class _LoginWithRestfulApiState extends State<LoginWithRestfulApi> {
                           builder: (context) => TelaCadastro()));
                     },
                   ),
-                  VerticalDivider(width: 60,),
+                  Spacer(),
                   botaoSemFundo('Esqueci minha senha', (){
                     _launchURL(raizApi+'/password-reset/');
                   })

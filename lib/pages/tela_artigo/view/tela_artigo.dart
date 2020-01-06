@@ -114,7 +114,7 @@ class _TelaArtigoState extends State<TelaArtigo> {
             heroTag: null,
             child: Icon(Icons.picture_as_pdf),
             onPressed: () {
-              _launchURL(widget.artigo.linkPdf.replaceAll('/view/', '/download/'));
+              _launchURL(widget.artigo.linkPdf);
             },
           ),
           FloatingActionButton(
