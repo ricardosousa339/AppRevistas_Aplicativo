@@ -2,21 +2,21 @@
 
 import 'package:apprevistas_aplicativo/pages/tela_edicao/view/tela_edicao.dart';
 import 'package:apprevistas_aplicativo/pages/tela_revista/model/edicao.dart';
-import 'package:extended_image/extended_image.dart';
+//import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
 blocoEdicao(List<Edicao> edicoes, int indice, BuildContext context, String keyy, String nomeRevista, String idUsuario){
 
-  ExtendedImage imagemThumbEdicao = ExtendedImage.asset('images/default_logo.png');
+  Image imagemThumbEdicao = Image.asset('images/default_logo.png');
   if(edicoes[indice].urlDaImagem != null){
-  imagemThumbEdicao =   ExtendedImage.network(
+  imagemThumbEdicao =   Image.network(
   edicoes[indice].urlDaImagem,
   //width: 50,
   //height: 50,
   fit: BoxFit.fitHeight,
-  cache: true,
+  //cache: true,
   //border: Border.all(color: Colors.red, width: 1.0),
-  shape: BoxShape.rectangle,
+  //shape: BoxShape.rectangle,
   //borderRadius: BorderRadius.all(Radius.circular(30.0)),
   //cancelToken: cancellationToken,
 );
