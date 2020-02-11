@@ -1,9 +1,8 @@
-import 'dart:convert';
-import 'dart:io';
+
 import 'dart:typed_data';
 
 import 'package:apprevistas_aplicativo/pages/tela_revista/model/revista.dart';
-import 'package:http/http.dart' as http;
+
 
 class Noticia{
 

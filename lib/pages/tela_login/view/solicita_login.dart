@@ -1,4 +1,4 @@
-import 'package:apprevistas_aplicativo/pages/tela_login/model/usuario.dart';
+
 import 'package:apprevistas_aplicativo/pages/tela_login/view/tela_login.dart';
 import 'package:apprevistas_aplicativo/pages/tela_revista/model/artigo.dart';
 import 'package:flutter/material.dart';

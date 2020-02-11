@@ -17,7 +17,7 @@ Future<List<String>> carregaIdsFavoritos(String idDoUsuario, String keyy) async 
       var data = json.decode(utf8.decode(response.bodyBytes));
       var rest = data[0]['artigos_favoritos'] as List;
 
-      int i = 0;
+
       for (var item in rest) {
 
         revistas.add(item["id"].toString());

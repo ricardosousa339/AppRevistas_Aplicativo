@@ -1,9 +1,7 @@
-import 'dart:async';
+
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:apprevistas_aplicativo/pages/tela_cadastro/controller/cadastra_usuario.dart';
-import 'package:apprevistas_aplicativo/pages/tela_inicio/fragments/cores.dart';
 import 'package:apprevistas_aplicativo/pages/tela_inicio/view/tela_inicial.dart';
 import 'package:apprevistas_aplicativo/pages/tela_login/controller/faz_login.dart';
 import 'package:apprevistas_aplicativo/pages/tela_login/controller/get_id_server.dart';
@@ -13,7 +11,6 @@ import 'package:apprevistas_aplicativo/widgets_pers.dart';
 //import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../urls.dart';
 

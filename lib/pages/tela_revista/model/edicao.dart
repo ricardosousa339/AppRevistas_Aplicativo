@@ -1,6 +1,6 @@
 
 
-import 'artigo.dart';
+
 
 class Edicao{
 

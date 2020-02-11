@@ -1,6 +1,5 @@
-import 'package:apprevistas_aplicativo/pages/tela_edicao/view/tela_edicao.dart';
+
 import 'package:apprevistas_aplicativo/pages/tela_inicio/fragments/cores.dart';
-import 'package:apprevistas_aplicativo/pages/tela_revista/controller/carrega_edicoes.dart';
 import 'package:apprevistas_aplicativo/pages/tela_revista/fragments/blocos_edicoes_revistas.dart';
 import 'package:apprevistas_aplicativo/pages/tela_revista/model/edicao.dart';
 import 'dart:convert';

@@ -1,6 +1,5 @@
-import 'dart:async';
+
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:apprevistas_aplicativo/pages/tela_artigo/view/tela_artigo.dart';
 import 'package:apprevistas_aplicativo/pages/tela_cadastro/view/tela_cadastro.dart';

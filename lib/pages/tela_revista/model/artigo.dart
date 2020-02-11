@@ -2,7 +2,6 @@ import 'package:apprevistas_aplicativo/pages/tela_revista/model/categoria.dart';
 import 'package:apprevistas_aplicativo/pages/tela_revista/model/palavra_chave.dart';
 
 import 'autor.dart';
-import 'edicao.dart';
 
 class Artigo {
   Artigo(

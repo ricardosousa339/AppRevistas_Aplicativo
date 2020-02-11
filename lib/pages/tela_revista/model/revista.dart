@@ -1,4 +1,4 @@
-import 'edicao.dart';
+
 
 class Revista{
 

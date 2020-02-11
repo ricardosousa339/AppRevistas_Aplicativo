@@ -6,13 +6,9 @@ import 'package:apprevistas_aplicativo/pages/tela_artigo/controller/favorita_art
 import 'package:apprevistas_aplicativo/pages/tela_inicio/fragments/cores.dart';
 import 'package:apprevistas_aplicativo/pages/tela_login/view/solicita_login.dart';
 import 'package:apprevistas_aplicativo/pages/tela_revista/model/artigo.dart';
-import 'package:apprevistas_aplicativo/pages/tela_revista/model/revista.dart';
-import 'package:apprevistas_aplicativo/urls.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:share/share.dart';
-import 'package:open_file/open_file.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TelaArtigo extends StatefulWidget {
